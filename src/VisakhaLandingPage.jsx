@@ -381,9 +381,9 @@ function HeroSection({ data, onNavigate }) {
     <section id="home" className="relative overflow-hidden px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pb-20 lg:pt-14">
       <div className="absolute inset-0 -z-10 app-glow" aria-hidden="true" />
       <div className="absolute bottom-0 left-0 right-0 -z-10 h-72 bg-gold/10 temple-silhouette" aria-hidden="true" />
-      <div className="mx-auto grid max-w-7xl items-center gap-8 xl:grid-cols-[0.72fr_1.05fr_0.68fr]">
+      <div className="mx-auto grid max-w-3xl items-center gap-8">
         <div className="text-center xl:text-left">
-          <div className="mx-auto grid h-28 w-28 place-items-center overflow-hidden rounded-[1.7rem] border-2 border-gold bg-navy shadow-glow xl:mx-0">
+          <div className="mx-auto grid h-28 w-28 place-items-center overflow-hidden rounded-[1.7rem] border-2 border-gold bg-navy shadow-glow">
             {looksLikeImage(data.logoImage) ? (
               <img src={data.logoImage} alt="โลโก้วัด" className="h-full w-full object-contain bg-white p-2" />
             ) : (
@@ -394,8 +394,8 @@ function HeroSection({ data, onNavigate }) {
           <p className="mt-4 text-xl font-semibold leading-8 text-ink">แอพเดียวครบทุกเรื่องบุญ</p>
           <p className="text-lg leading-8 text-muted">ทำบุญ • ปฏิบัติธรรม • ติดตามกิจกรรม</p>
           <div className="mt-8 grid gap-3">
-            {featureItems.map(([Icon, title, detail]) => (
-              <button key={title} type="button" onClick={() => onNavigate(title.includes("ทำบุญ") ? "donate" : "schedule")} className="mx-auto flex w-full max-w-sm items-center gap-4 rounded-[1.6rem] bg-white/82 p-4 text-left shadow-soft transition hover:-translate-y-1 xl:mx-0">
+            {featureItems.slice(0, 2).map(([Icon, title, detail]) => (
+              <button key={title} type="button" onClick={() => onNavigate(title.includes("ทำบุญ") ? "donate" : "schedule")} className="mx-auto flex w-full max-w-sm items-center gap-4 rounded-[1.6rem] bg-white/82 p-4 text-left shadow-soft transition hover:-translate-y-1">
                 <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-gold text-white">
                   <Icon size={26} aria-hidden="true" />
                 </span>
@@ -408,7 +408,7 @@ function HeroSection({ data, onNavigate }) {
           </div>
         </div>
 
-        <div className="mx-auto w-full max-w-[430px]">
+        <div className="hidden">
           <div className="phone-shell overflow-hidden bg-ivory">
             <div className="phone-status px-5 pt-2">
               <span>9:41</span>
@@ -471,7 +471,7 @@ function HeroSection({ data, onNavigate }) {
           </div>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-1">
+        <div className="hidden">
           <MiniSchedulePhone data={data} />
           <MiniDonationPhone data={data} onNavigate={onNavigate} />
         </div>
