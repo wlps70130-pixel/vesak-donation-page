@@ -911,12 +911,7 @@ function PageView({ currentView, data, loadingState, onNavigate }) {
   }
 
   if (currentView === "donate") {
-    return (
-      <>
-        <DonationSection data={data} />
-        <DonorTable data={data} />
-      </>
-    );
+    return <DonationSection data={data} />;
   }
 
   if (currentView === "schedule") {
@@ -936,6 +931,7 @@ function PageView({ currentView, data, loadingState, onNavigate }) {
     <>
       <HeroSection data={data} onNavigate={onNavigate} />
       <InfoBar data={data} />
+      <DonorTable data={data} />
       {loadingState === "error" && (
         <div className="mx-auto mt-6 max-w-7xl px-4 sm:px-6 lg:px-8">
           <p className="rounded-2xl border border-gold/25 bg-white px-4 py-3 text-sm font-semibold text-muted">
