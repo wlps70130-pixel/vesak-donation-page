@@ -88,8 +88,7 @@ body {
   background-size: auto, auto, 34px 34px;
 }
 
-.cover-placeholder span,
-.cover-placeholder strong {
+.cover-placeholder span {
   display: block;
 }
 
@@ -97,13 +96,6 @@ body {
   font-size: clamp(1rem, 2vw, 1.3rem);
   font-weight: 800;
   opacity: 0.9;
-}
-
-.cover-placeholder strong {
-  margin-top: 8px;
-  color: #ffffff;
-  font-size: clamp(1.6rem, 4vw, 3rem);
-  line-height: 1.05;
 }
 
 .banner-copy {
