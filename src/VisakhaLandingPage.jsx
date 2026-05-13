@@ -19,6 +19,11 @@ import {
   ShieldCheck,
   Smartphone,
   Sparkles,
+  Bell,
+  CalendarCheck,
+  HandHeart,
+  Megaphone,
+  UserRound,
   Wifi,
   X,
 } from "lucide-react";
@@ -340,55 +345,182 @@ function Header({ data }) {
 }
 
 function HeroSection({ data }) {
+  const serviceItems = [
+    [HandHeart, "ร่วมทำบุญ"],
+    [CalendarCheck, "กำหนดการ"],
+    [Flower2, "กิจกรรม"],
+    [BookOpen, "ธรรมะ"],
+    [Megaphone, "ข่าวสาร"],
+    [RadioTower, "ถ่ายทอดสด"],
+    [MapPin, "แผนที่วัด"],
+    [Phone, "ติดต่อเรา"],
+  ];
+  const featureItems = [
+    [Flower2, "ร่วมทำบุญออนไลน์", "สะดวก ปลอดภัย ได้บุญ"],
+    [CalendarDays, "กำหนดการ & กิจกรรม", "ไม่พลาดทุกกิจกรรมสำคัญ"],
+    [BookOpen, "ธรรมะใกล้ตัว", "บทความ และสื่อธรรมะ"],
+    [Bell, "แจ้งเตือนกิจกรรม", "แจ้งเตือนข่าวสารและกิจกรรม"],
+    [UserRound, "บัญชีผู้ใช้", "จัดการข้อมูลส่วนตัว"],
+  ];
+
   return (
     <section id="home" className="relative overflow-hidden px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pb-20 lg:pt-14">
-      <div className="absolute inset-x-0 top-0 -z-10 h-[620px] thai-pattern opacity-50" aria-hidden="true" />
-      <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.02fr_0.98fr]">
-        <div className="max-w-2xl">
-          <p className="mb-4 inline-flex rounded-full border border-gold/30 bg-white/75 px-4 py-2 text-sm font-bold text-gold shadow-sm">
-            {data.eyebrow}
-          </p>
-          <h1 className="text-balance text-4xl font-black leading-tight text-navy sm:text-5xl lg:text-6xl">
-            {data.heroTitle}
-          </h1>
-          <p className="mt-4 text-xl font-bold text-gold sm:text-2xl">{data.heroDate}</p>
-          <p className="mt-5 max-w-xl text-pretty text-base leading-8 text-muted sm:text-lg">
-            {data.heroText}
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a href="#donate" className="inline-flex min-h-12 items-center justify-center rounded-full bg-gold px-6 py-3 font-bold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#b78324]">
-              ร่วมทำบุญออนไลน์
-            </a>
-            <a href="#schedule" className="inline-flex min-h-12 items-center justify-center rounded-full border border-gold/35 bg-white px-6 py-3 font-bold text-navy transition hover:-translate-y-0.5 hover:bg-softblue">
-              ดูกำหนดการ
-            </a>
+      <div className="absolute inset-0 -z-10 app-glow" aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 right-0 -z-10 h-72 bg-gold/10 temple-silhouette" aria-hidden="true" />
+      <div className="mx-auto grid max-w-7xl items-center gap-8 xl:grid-cols-[0.72fr_1.05fr_0.68fr]">
+        <div className="text-center xl:text-left">
+          <div className="mx-auto grid h-28 w-28 place-items-center overflow-hidden rounded-[1.7rem] border-2 border-gold bg-navy shadow-glow xl:mx-0">
+            {looksLikeImage(data.logoImage) ? (
+              <img src={data.logoImage} alt="โลโก้วัด" className="h-full w-full object-contain bg-white p-2" />
+            ) : (
+              <Landmark className="text-gold" size={62} strokeWidth={1.3} aria-hidden="true" />
+            )}
+          </div>
+          <h1 className="mt-8 text-5xl font-black leading-tight text-navy sm:text-6xl xl:text-7xl">{data.siteTitle}</h1>
+          <p className="mt-4 text-xl font-semibold leading-8 text-ink">แอพเดียวครบทุกเรื่องบุญ</p>
+          <p className="text-lg leading-8 text-muted">ทำบุญ • ปฏิบัติธรรม • ติดตามกิจกรรม</p>
+          <div className="mt-8 grid gap-3">
+            {featureItems.map(([Icon, title, detail]) => (
+              <a key={title} href={title.includes("ทำบุญ") ? "#donate" : "#schedule"} className="mx-auto flex w-full max-w-sm items-center gap-4 rounded-[1.6rem] bg-white/82 p-4 text-left shadow-soft transition hover:-translate-y-1 xl:mx-0">
+                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-gold text-white">
+                  <Icon size={26} aria-hidden="true" />
+                </span>
+                <span>
+                  <span className="block text-lg font-black text-navy">{title}</span>
+                  <span className="text-sm font-semibold text-muted">{detail}</span>
+                </span>
+              </a>
+            ))}
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-xl">
-          <div className="absolute left-1/2 top-9 h-64 w-64 -translate-x-1/2 rounded-full bg-gold/20 blur-3xl" aria-hidden="true" />
-          <div className="absolute bottom-8 left-0 right-0 h-40 bg-navy/10 temple-silhouette" aria-hidden="true" />
-          <div className="glass-card relative overflow-hidden rounded-[2rem] border border-gold/25 p-5 shadow-glow">
-            <div className="absolute right-4 top-4 h-16 w-16 bg-cream/80 hero-lotus" aria-hidden="true" />
-            <div className="aspect-[3/2] overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-white via-ivory to-softblue">
+        <div className="mx-auto w-full max-w-[430px]">
+          <div className="phone-shell overflow-hidden bg-ivory">
+            <div className="phone-status px-5 pt-2">
+              <span>9:41</span>
+              <span>●●● ▰</span>
+            </div>
+            <div className="relative overflow-hidden px-4 pb-4">
+              <div className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full bg-white/70 text-gold shadow-sm">
+                <Bell size={21} aria-hidden="true" />
+                <span className="absolute -right-0.5 -top-0.5 grid h-5 w-5 place-items-center rounded-full bg-red-500 text-[10px] font-black text-white">3</span>
+              </div>
+              <div className="px-2 pb-2 pt-5 text-center">
+                <h2 className="text-4xl font-black text-navy">วิสาขะธรรม</h2>
+                <p className="mt-1 text-sm font-semibold text-muted">ทำบุญอย่างมีสติ ชีวิตงดงามด้วยธรรม</p>
+              </div>
+              <div className="relative mt-4 aspect-[4/3] overflow-hidden rounded-[1.9rem] bg-gradient-to-br from-white via-cream to-softblue shadow-soft">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_32%,rgba(255,255,255,.95),transparent_18%),radial-gradient(circle_at_50%_35%,rgba(201,150,45,.28),transparent_38%)]" aria-hidden="true" />
               {data.coverImage ? (
-                <img src={data.coverImage} alt="ภาพปกงานวันวิสาขบูชา" className="h-full w-full object-cover" loading="eager" />
+                  <img src={data.coverImage} alt="ภาพปกงานวันวิสาขบูชา" className="relative h-full w-full object-cover" loading="eager" />
               ) : (
-                <div className="grid h-full place-items-center px-8 text-center">
+                  <div className="relative grid h-full place-items-center px-8 text-center">
                   <div>
-                    <div className="mx-auto mb-5 grid h-32 w-32 place-items-center rounded-full bg-gold/15 shadow-glow">
-                      <Landmark className="text-gold" size={70} strokeWidth={1.4} aria-hidden="true" />
+                      <div className="mx-auto mb-5 grid h-32 w-32 place-items-center rounded-full bg-gold/15 shadow-glow">
+                        <Landmark className="text-gold" size={70} strokeWidth={1.4} aria-hidden="true" />
                     </div>
-                    <p className="text-2xl font-black text-navy">พระพุทธรูปสีทอง</p>
-                    <p className="mt-2 text-sm text-muted">ใส่ลิงก์รูปหน้าปกใน Google Sheet เพื่อเปลี่ยนภาพนี้</p>
+                      <p className="text-2xl font-black text-navy">พระพุทธรูปสีทอง</p>
                   </div>
                 </div>
               )}
             </div>
+              <div className="-mt-8 rounded-[1.6rem] bg-navy p-5 text-center text-white shadow-soft ring-1 ring-gold/50">
+                <p className="mx-auto mb-2 w-fit rounded-full bg-gold px-4 py-1 text-xs font-black">เชิญร่วมงาน</p>
+                <h3 className="text-3xl font-black">{data.heroTitle.replace("ปฏิบัติธรรม ", "")}</h3>
+                <p className="mt-2 text-sm font-semibold leading-6 text-cream">{data.objectiveSubtitle}</p>
+              </div>
+              <div className="-mt-1 grid grid-cols-3 overflow-hidden rounded-[1.35rem] bg-white shadow-soft ring-1 ring-gold/20">
+                {[
+                  [CalendarDays, "31", "พ.ค. 2569"],
+                  [MapPin, "พระมหาเจดีย์", "วิสาขบูชา"],
+                  [Clock3, "09.00 น.", "เป็นต้นไป"],
+                ].map(([Icon, main, sub]) => (
+                  <div key={main} className="border-r border-gold/15 px-2 py-4 text-center last:border-r-0">
+                    <Icon className="mx-auto text-gold" size={24} aria-hidden="true" />
+                    <p className="mt-2 text-lg font-black text-navy">{main}</p>
+                    <p className="text-xs font-semibold text-muted">{sub}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-5">
+                <p className="mb-3 text-sm font-black text-navy">บริการหลัก</p>
+                <div className="grid grid-cols-4 gap-3">
+                  {serviceItems.map(([Icon, label]) => (
+                    <a key={label} href={label.includes("ร่วม") ? "#donate" : "#schedule"} className="grid min-h-20 place-items-center rounded-2xl bg-white p-2 text-center text-[11px] font-black text-navy shadow-sm transition hover:-translate-y-0.5">
+                      <Icon className="text-gold" size={24} aria-hidden="true" />
+                      <span>{label}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-1">
+          <MiniSchedulePhone data={data} />
+          <MiniDonationPhone data={data} />
         </div>
       </div>
     </section>
+  );
+}
+
+function MiniSchedulePhone({ data }) {
+  return (
+    <aside className="mx-auto w-full max-w-[320px] rounded-[2.2rem] border-[7px] border-[#101318] bg-ivory p-4 shadow-soft">
+      <div className="phone-status">
+        <span>9:41</span>
+        <span>●● ▰</span>
+      </div>
+      <h3 className="mt-3 text-center text-xl font-black text-navy">กำหนดการ</h3>
+      <div className="mt-5 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gold/20">
+        {data.schedule.slice(0, 6).map(([time, detail]) => (
+          <div key={`${time}-${detail}`} className="grid grid-cols-[36px_1fr] gap-3 border-b border-gold/15 py-3 last:border-b-0">
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-gold text-white">
+              <Clock3 size={16} aria-hidden="true" />
+            </span>
+            <p className="text-sm leading-6 text-muted">
+              <strong className="block text-navy">{time}</strong>
+              {detail}
+            </p>
+          </div>
+        ))}
+      </div>
+    </aside>
+  );
+}
+
+function MiniDonationPhone({ data }) {
+  return (
+    <aside className="mx-auto w-full max-w-[320px] rounded-[2.2rem] border-[7px] border-[#101318] bg-navy p-4 text-white shadow-soft">
+      <div className="phone-status text-white">
+        <span>9:41</span>
+        <span>●● ▰</span>
+      </div>
+      <h3 className="mt-3 text-center text-2xl font-black text-gold">ร่วมทำบุญ</h3>
+      <p className="text-center text-sm font-semibold text-cream">สะดวก รวดเร็ว ได้บุญ</p>
+      <div className="mt-5 rounded-[1.6rem] border border-gold p-4">
+        <div className="mx-auto aspect-square w-44 overflow-hidden rounded-2xl bg-white p-2">
+          {looksLikeImage(data.qrImage) ? (
+            <img src={data.qrImage} alt="QR Code สำหรับร่วมทำบุญ" className="h-full w-full object-contain" loading="lazy" />
+          ) : (
+            <div className="grid h-full place-items-center text-navy">
+              <QrCode size={84} className="text-gold" aria-hidden="true" />
+            </div>
+          )}
+        </div>
+        <dl className="mt-4 space-y-1 text-sm font-semibold text-cream">
+          <div>ธนาคาร {data.bankName}</div>
+          <div>เลขบัญชี {data.bankAccount}</div>
+          <div>ชื่อบัญชี {data.bankAccountName}</div>
+        </dl>
+        <a href="#donate" className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-gold font-black text-white">
+          ส่งสลิปทาง Line OA
+        </a>
+        <p className="mt-3 text-center text-sm font-bold text-cream">Line OA : {data.lineId}</p>
+      </div>
+    </aside>
   );
 }
 
