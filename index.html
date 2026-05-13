@@ -326,6 +326,12 @@
   </head>
   <body>
     <main class="page-shell">
+      <header class="site-header" aria-label="โลโก้วัด">
+        <div class="temple-logo" id="temple-logo">
+          <span>วัด</span>
+        </div>
+      </header>
+
       <section class="banner" aria-labelledby="festival-title">
         <div class="banner-art cover-frame" aria-label="รูปภาพหน้าปก">
           <div class="cover-placeholder">
@@ -396,6 +402,7 @@
         const coverFrame = document.querySelector(".cover-frame");
         const coverPlaceholder = document.querySelector(".cover-placeholder");
         const coverLabel = document.querySelector("#cover-label");
+        const templeLogo = document.querySelector("#temple-logo");
         const settingsTargets = {
           "งานบุญประจำปี": "#page-eyebrow",
           "ชื่อป้ายหลัก": "#festival-title",
@@ -413,6 +420,23 @@
 
         function looksLikeImageUrl(value) {
           return /^https?:\/\/.+\.(png|jpe?g|webp|gif|avif)(\?.*)?$/i.test(value || "");
+        }
+
+        function setLogoImage(imageUrl) {
+          if (!templeLogo || !imageUrl) return;
+
+          templeLogo.replaceChildren();
+          const image = document.createElement("img");
+          image.src = imageUrl;
+          image.alt = "โลโก้วัด";
+          image.decoding = "async";
+          image.addEventListener("error", () => {
+            templeLogo.replaceChildren();
+            const fallback = document.createElement("span");
+            fallback.textContent = "วัด";
+            templeLogo.appendChild(fallback);
+          });
+          templeLogo.appendChild(image);
         }
 
         function setCoverImage(imageUrl) {
@@ -518,6 +542,10 @@
             const value = row[settingsValueColumn];
             if ((key === "ข้อความรูปปก" || key === "ลิงก์รูปหน้าปก") && looksLikeImageUrl(value)) {
               setCoverImage(value);
+              return;
+            }
+            if (key === "ลิงก์โลโก้วัด" && looksLikeImageUrl(value)) {
+              setLogoImage(value);
               return;
             }
             if (key === "ข้อความรูปปก" && coverLabel && value) {
