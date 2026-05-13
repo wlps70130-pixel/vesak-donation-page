@@ -324,7 +324,6 @@
     <main class="page-shell">
       <section class="banner" aria-labelledby="festival-title">
         <div class="banner-art cover-frame" aria-label="รูปภาพหน้าปก">
-          <!-- เมื่อมีไฟล์รูปจริง ให้วางไฟล์ในโฟลเดอร์นี้แล้วเปลี่ยนบล็อกด้านล่างเป็น <img src="cover.jpg" alt="" /> -->
           <div class="cover-placeholder">
             <div>
               <span id="cover-label">รูปภาพหน้าปก</span>
@@ -391,6 +390,9 @@
         const tableBody = document.querySelector("#donor-table-body");
         const tableStatus = document.querySelector("#table-status");
         const refreshButton = document.querySelector("#refresh-donors");
+        const coverFrame = document.querySelector(".cover-frame");
+        const coverPlaceholder = document.querySelector(".cover-placeholder");
+        const coverLabel = document.querySelector("#cover-label");
         const settingsTargets = {
           "งานบุญประจำปี": "#page-eyebrow",
           "ชื่อป้ายหลัก": "#festival-title",
@@ -403,9 +405,36 @@
           "ข้อความการร่วมบุญ": "#donation-text",
           "ป้ายตาราง": "#table-eyebrow",
           "หัวข้อตาราง": "#donor-title",
-          "ข้อความรูปปก": "#cover-label",
           "ติดต่อสอบถาม": "#contact-text",
         };
+
+        function looksLikeImageUrl(value) {
+          return /^https?:\/\/.+\.(png|jpe?g|webp|gif|avif)(\?.*)?$/i.test(value || "");
+        }
+
+        function setCoverImage(imageUrl) {
+          if (!coverFrame || !coverPlaceholder || !imageUrl) return;
+
+          const existingImage = coverFrame.querySelector(".cover-image");
+          if (existingImage) {
+            existingImage.src = imageUrl;
+            return;
+          }
+
+          const image = document.createElement("img");
+          image.className = "cover-image";
+          image.src = imageUrl;
+          image.alt = "รูปภาพหน้าปก";
+          image.loading = "eager";
+          image.decoding = "async";
+          image.addEventListener("error", () => {
+            image.remove();
+            coverPlaceholder.hidden = false;
+            if (coverLabel) coverLabel.textContent = "โหลดรูปภาพหน้าปกไม่สำเร็จ";
+          });
+          coverPlaceholder.hidden = true;
+          coverFrame.prepend(image);
+        }
 
         function parseCsv(csvText) {
           const rows = [];
@@ -482,6 +511,14 @@
           rows.slice(1).forEach((row) => {
             const key = row[settingsKeyColumn];
             const value = row[settingsValueColumn];
+            if ((key === "ข้อความรูปปก" || key === "ลิงก์รูปหน้าปก") && looksLikeImageUrl(value)) {
+              setCoverImage(value);
+              return;
+            }
+            if (key === "ข้อความรูปปก" && coverLabel && value) {
+              coverLabel.textContent = value;
+              return;
+            }
             const selector = settingsTargets[key];
             const target = selector ? document.querySelector(selector) : null;
             if (target && value) {
