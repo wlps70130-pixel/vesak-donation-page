@@ -330,6 +330,11 @@
         <div class="temple-logo" id="temple-logo">
           <span>วัด</span>
         </div>
+        <div class="site-title">
+          <strong id="site-title-text">วันวิสาขบูชา</strong>
+          <span id="site-subtitle-text">ขอเชิญร่วมทำบุญ</span>
+        </div>
+        <button class="menu-button" type="button" aria-label="เมนู">☰</button>
       </header>
 
       <section class="banner" aria-labelledby="festival-title">
@@ -347,20 +352,83 @@
             ขอเชิญร่วมทำบุญทอดผ้าป่าสามัคคี เพื่อทำนุบำรุงพระพุทธศาสนา
             และร่วมสืบสานประเพณีอันดีงามด้วยจิตศรัทธา
           </p>
+          <div class="event-meta">
+            <div>
+              <span>วันที่</span>
+              <strong id="event-date">วันอาทิตย์ที่ 31 พฤษภาคม 2569</strong>
+            </div>
+            <div>
+              <span>เวลา</span>
+              <strong id="event-time">09.00 น. เป็นต้นไป</strong>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="details" aria-label="รายละเอียดงาน">
-        <div class="detail-item">
+      <section class="activity-strip" aria-labelledby="activity-title">
+        <h2 id="activity-title">กิจกรรมภายในงาน</h2>
+        <div class="activity-grid" id="activity-grid"></div>
+      </section>
+
+      <section class="info-grid" aria-label="รายละเอียดงาน">
+        <div class="info-card">
           <span class="detail-label" id="detail-label">รายละเอียด</span>
           <strong id="detail-title">ร่วมเป็นเจ้าภาพและคณะผู้มีจิตศรัทธา</strong>
           <p id="detail-text">รายนามผู้ทำบุญจะแสดงตามลำดับประเภทเจ้าภาพและยอดร่วมบุญ</p>
         </div>
-        <div class="detail-item">
+        <div class="info-card">
           <span class="detail-label" id="donation-label">การร่วมบุญ</span>
           <strong id="donation-title">ถวายเป็นกองผ้าป่า</strong>
           <p id="donation-text">สามารถระบุชื่อบุคคล ครอบครัว หรือชื่อคณะ เพื่อประกาศอนุโมทนาบุญ</p>
         </div>
+      </section>
+
+      <section class="schedule-card" aria-labelledby="schedule-title">
+        <div class="section-heading">
+          <h2 id="schedule-title">กำหนดการภายในงาน</h2>
+          <span>รายละเอียดทั้งหมด</span>
+        </div>
+        <div class="schedule-list" id="schedule-list"></div>
+      </section>
+
+      <section class="donation-card" aria-labelledby="donation-info-title">
+        <div class="qr-box" id="qr-box">
+          <span>QR</span>
+          <small>สแกนร่วมทำบุญ</small>
+        </div>
+        <div class="donation-copy">
+          <p class="pill-title" id="donation-info-title">ร่วมทำบุญได้ที่</p>
+          <dl>
+            <div>
+              <dt>ธนาคาร</dt>
+              <dd id="bank-name">ธนาคารกรุงเทพ</dd>
+            </div>
+            <div>
+              <dt>เลขที่บัญชี</dt>
+              <dd id="bank-account">422-0-31266-6</dd>
+            </div>
+            <div>
+              <dt>ชื่อบัญชี</dt>
+              <dd id="bank-owner">วัดหลวงพ่อสดฯ</dd>
+            </div>
+          </dl>
+          <strong id="donation-line">Line ID:@info.wat06</strong>
+        </div>
+      </section>
+
+      <section class="place-card">
+        <div>
+          <span>สถานที่</span>
+          <strong id="place-text">ณ พระมหาเจดีย์มหารัชมงคล วัดหลวงพ่อสดฯ อ.ดำเนินสะดวก จ.ราชบุรี</strong>
+        </div>
+        <a id="map-button" href="#" aria-label="แผนที่">แผนที่</a>
+      </section>
+
+      <section class="social-row" aria-label="ช่องทางติดต่อ">
+        <span id="phone-text">090-595-5162</span>
+        <span id="facebook-text">วัดหลวงพ่อสดฯ</span>
+        <span id="tiktok-text">วัดหลวงพ่อสดฯ</span>
+        <span id="line-text">@info.wat06</span>
       </section>
 
       <section class="donation-panel" aria-labelledby="donor-title">
@@ -383,8 +451,8 @@
       </section>
 
       <footer class="contact-footer">
-        <span>ติดต่อสอบถาม</span>
-        <strong id="contact-text">ติดต่อสอบถามทางไลน์ @info.wat06</strong>
+        <span>♥</span>
+        <strong id="contact-text">ร่วมเป็นเจ้าภาพผ้าป่าสามัคคี</strong>
       </footer>
     </main>
     <script>
@@ -403,6 +471,9 @@
         const coverPlaceholder = document.querySelector(".cover-placeholder");
         const coverLabel = document.querySelector("#cover-label");
         const templeLogo = document.querySelector("#temple-logo");
+        const scheduleList = document.querySelector("#schedule-list");
+        const activityGrid = document.querySelector("#activity-grid");
+        const qrBox = document.querySelector("#qr-box");
         const settingsTargets = {
           "งานบุญประจำปี": "#page-eyebrow",
           "ชื่อป้ายหลัก": "#festival-title",
@@ -416,6 +487,20 @@
           "ป้ายตาราง": "#table-eyebrow",
           "หัวข้อตาราง": "#donor-title",
           "ติดต่อสอบถาม": "#contact-text",
+          "วันที่จัดงาน": "#event-date",
+          "เวลาเริ่มงาน": "#event-time",
+          "หัวข้อกำหนดการ": "#schedule-title",
+          "หัวข้อร่วมทำบุญ": "#donation-info-title",
+          "ธนาคาร": "#bank-name",
+          "เลขที่บัญชี": "#bank-account",
+          "ชื่อบัญชี": "#bank-owner",
+          "สถานที่": "#place-text",
+          "เบอร์โทร": "#phone-text",
+          "Facebook": "#facebook-text",
+          "TikTok": "#tiktok-text",
+          "Line": "#line-text",
+          "ปุ่มหลัก": "#contact-text",
+          "หัวข้อกิจกรรม": "#activity-title",
         };
 
         function resolveSettingSelector(key) {
@@ -434,6 +519,19 @@
           if (key.includes("ป้ายตาราง")) return "#table-eyebrow";
           if (key.includes("หัวข้อตาราง")) return "#donor-title";
           if (key.includes("ติดต่อสอบถาม")) return "#contact-text";
+          if (key.includes("วันที่")) return "#event-date";
+          if (key.includes("เวลา")) return "#event-time";
+          if (key.includes("กำหนดการ")) return "#schedule-title";
+          if (key.includes("ธนาคาร")) return "#bank-name";
+          if (key.includes("เลขที่บัญชี")) return "#bank-account";
+          if (key.includes("ชื่อบัญชี")) return "#bank-owner";
+          if (key.includes("สถานที่")) return "#place-text";
+          if (key.includes("เบอร์โทร")) return "#phone-text";
+          if (key.includes("Facebook")) return "#facebook-text";
+          if (key.includes("TikTok")) return "#tiktok-text";
+          if (key.includes("Line")) return "#line-text";
+          if (key.includes("ปุ่มหลัก")) return "#contact-text";
+          if (key.includes("กิจกรรม")) return "#activity-title";
 
           return null;
         }
@@ -484,6 +582,18 @@
           coverPlaceholder.hidden = true;
           coverPlaceholder.style.display = "none";
           coverFrame.prepend(image);
+        }
+
+        function setQrImage(imageUrl) {
+          if (!qrBox || !looksLikeImageUrl(imageUrl)) return;
+
+          qrBox.replaceChildren();
+          const image = document.createElement("img");
+          image.src = imageUrl;
+          image.alt = "QR Code ร่วมทำบุญ";
+          image.loading = "lazy";
+          image.decoding = "async";
+          qrBox.appendChild(image);
         }
 
         function parseCsv(csvText) {
@@ -569,6 +679,10 @@
               setLogoImage(value);
               return;
             }
+            if (key === "ลิงก์ QR ทำบุญ" && looksLikeImageUrl(value)) {
+              setQrImage(value);
+              return;
+            }
             if (key === "ข้อความรูปปก" && coverLabel && value) {
               coverLabel.textContent = value;
               return;
@@ -578,6 +692,52 @@
             if (target && value) {
               target.textContent = value;
             }
+            if (key && key.includes("ชื่อป้าย") && value) {
+              const siteTitle = document.querySelector("#site-title-text");
+              if (siteTitle) siteTitle.textContent = value;
+            }
+            if (key && key.includes("งานบุญประจำปี") && value) {
+              const siteSubtitle = document.querySelector("#site-subtitle-text");
+              if (siteSubtitle) siteSubtitle.textContent = value;
+            }
+          });
+        }
+
+        function renderSchedule(rows) {
+          if (!scheduleList) return;
+
+          const items = rows
+            .slice(1)
+            .map((row) => ({ time: row[8], text: row[9] }))
+            .filter((item) => item.time || item.text);
+
+          scheduleList.replaceChildren();
+          items.forEach((item) => {
+            const row = document.createElement("div");
+            row.className = "schedule-item";
+            row.innerHTML = `<time>${item.time || "-"}</time><span>${item.text || "-"}</span>`;
+            scheduleList.appendChild(row);
+          });
+        }
+
+        function renderActivities(rows) {
+          if (!activityGrid) return;
+
+          const items = rows
+            .slice(1)
+            .map((row) => ({ title: row[11], text: row[12], icon: row[13] }))
+            .filter((item) => item.title || item.text || item.icon);
+
+          activityGrid.replaceChildren();
+          items.forEach((item) => {
+            const card = document.createElement("article");
+            card.className = "activity-card";
+            card.innerHTML = `
+              <div class="activity-icon">${item.icon || "✦"}</div>
+              <strong>${item.title || "-"}</strong>
+              <span>${item.text || ""}</span>
+            `;
+            activityGrid.appendChild(card);
           });
         }
 
@@ -595,6 +755,8 @@
 
             const rows = parseCsv(await response.text());
             applySettings(rows);
+            renderSchedule(rows);
+            renderActivities(rows);
 
             if (!rows.length) {
               renderEmpty("ยังไม่มีข้อมูลใน Google Sheet");
