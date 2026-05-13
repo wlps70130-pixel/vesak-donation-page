@@ -85,3 +85,22 @@ a {
     radial-gradient(circle at 50% 38%, rgba(201, 150, 45, 0.28), transparent 34%),
     linear-gradient(180deg, #fff9ec, #f7e8c8 55%, #fffdf8);
 }
+
+.app-bg {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(234, 244, 255, 0.9), transparent 34rem),
+    radial-gradient(circle at 86% 8%, rgba(247, 232, 200, 0.75), transparent 28rem),
+    linear-gradient(180deg, #fffdf8 0%, #fff9ec 46%, #ffffff 100%);
+}
+
+.app-panel {
+  background: rgba(255, 253, 248, 0.78);
+  border: 1px solid rgba(201, 150, 45, 0.18);
+  box-shadow: 0 22px 60px rgba(11, 42, 74, 0.08);
+  backdrop-filter: blur(20px);
+}
+
+.luxury-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 150, 45, 0.48), transparent);
+}

@@ -293,7 +293,7 @@ function Header({ data, currentView, onNavigate }) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/60 bg-ivory/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-gold/10 bg-white/72 shadow-[0_12px_35px_rgba(11,42,74,0.05)] backdrop-blur-xl">
       <nav className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8" aria-label="เมนูหลัก">
         <button type="button" onClick={() => onNavigate("home")} className="flex min-w-0 items-center gap-3 text-left" aria-label="กลับไปหน้าหลัก">
           <div className="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full border border-gold/50 bg-white shadow-soft">
@@ -622,8 +622,8 @@ function ActivitySection({ data }) {
 
 function ScheduleTimeline({ data }) {
   return (
-    <section id="schedule" className="bg-white px-4 py-16 sm:px-6 lg:px-8" aria-labelledby="schedule-title">
-      <div className="mx-auto max-w-5xl rounded-[2rem] border border-gold/20 bg-ivory/70 p-5 shadow-soft sm:p-8">
+    <section id="schedule" className="px-4 py-10 sm:px-6 lg:px-8" aria-labelledby="schedule-title">
+      <div className="app-panel mx-auto max-w-4xl rounded-[2rem] p-5 sm:p-8">
         <div className="mb-8 flex items-center gap-4">
           <IconBadge icon="book" />
           <div>
@@ -631,11 +631,11 @@ function ScheduleTimeline({ data }) {
             <h2 id="schedule-title" className="text-3xl font-black text-navy">กำหนดการ</h2>
           </div>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-3">
           {data.schedule.map(([time, detail], index) => (
-            <div key={`${time}-${index}`} className="grid gap-3 rounded-2xl bg-white p-4 shadow-sm sm:grid-cols-[120px_1fr] sm:items-center">
-              <time className="inline-flex items-center gap-2 font-black text-gold">
-                <Clock3 size={18} aria-hidden="true" />
+            <div key={`${time}-${index}`} className="grid gap-3 rounded-[1.35rem] border border-gold/10 bg-white/76 p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-gold/30 sm:grid-cols-[120px_1fr] sm:items-center">
+              <time className="inline-flex min-h-11 items-center gap-2 rounded-full bg-cream/70 px-3 font-black text-gold">
+                <Clock3 size={17} aria-hidden="true" />
                 {time}
               </time>
               <p className="text-base font-semibold leading-7 text-ink">{detail}</p>
@@ -661,8 +661,8 @@ function DonationSection({ data }) {
   };
 
   return (
-    <section id="donate" className="px-4 py-16 sm:px-6 lg:px-8" aria-labelledby="donate-title">
-      <div className="mx-auto grid max-w-7xl gap-8 rounded-[2rem] border border-gold/35 bg-navy p-5 text-white shadow-soft sm:p-8 lg:grid-cols-[0.85fr_1.15fr] lg:p-10">
+    <section id="donate" className="px-4 py-10 sm:px-6 lg:px-8" aria-labelledby="donate-title">
+      <div className="mx-auto grid max-w-6xl gap-8 rounded-[2rem] border border-gold/35 bg-navy p-5 text-white shadow-soft sm:p-8 lg:grid-cols-[0.82fr_1.18fr] lg:p-10">
         <div>
           <p className="inline-flex rounded-full bg-gold px-4 py-2 text-sm font-black text-white">ร่วมทำบุญ</p>
           <h2 id="donate-title" className="mt-5 text-3xl font-black sm:text-4xl">{data.donationHeading}</h2>
@@ -677,8 +677,8 @@ function DonationSection({ data }) {
             ส่งสลิปทาง Line OA
           </a>
         </div>
-        <div className="grid gap-5 md:grid-cols-[220px_1fr] md:items-center">
-          <div className="mx-auto w-full max-w-[220px] overflow-hidden rounded-2xl border border-gold/40 bg-white p-3 shadow-glow">
+        <div className="grid gap-5 md:grid-cols-[minmax(210px,280px)_1fr] md:items-center">
+          <div className="mx-auto w-full max-w-[280px] overflow-hidden rounded-[1.6rem] border border-gold/40 bg-white p-3 shadow-glow">
             <div className="aspect-[4/5] overflow-hidden rounded-xl bg-ivory">
               {looksLikeImage(data.qrImage) ? (
                 <img src={data.qrImage} alt="QR Code สำหรับร่วมทำบุญ" className="h-full w-full object-contain" loading="lazy" />
@@ -752,7 +752,7 @@ function MeritSection({ data }) {
 
 function DonorTable({ data }) {
   return (
-    <section className="px-4 py-16 sm:px-6 lg:px-8" aria-labelledby="donor-title">
+    <section className="px-4 py-10 sm:px-6 lg:px-8" aria-labelledby="donor-title">
       <div className="mx-auto max-w-7xl">
         <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
           <div>
@@ -764,10 +764,10 @@ function DonorTable({ data }) {
           </div>
           <p className="text-sm text-muted">รายชื่ออัปเดตจาก Google Sheet</p>
         </div>
-        <div className="hidden overflow-hidden rounded-2xl border border-gold/20 bg-white shadow-soft md:block">
+        <div className="app-panel hidden overflow-hidden rounded-[1.7rem] md:block">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gold/15">
-              <thead className="bg-ivory text-left text-sm font-black text-navy">
+              <thead className="bg-cream/45 text-left text-sm font-black text-navy">
                 <tr>
                   <th className="px-4 py-4">ลำดับ</th>
                   <th className="px-4 py-4">ประเภท</th>
@@ -797,7 +797,7 @@ function DonorTable({ data }) {
         <div className="grid gap-3 md:hidden">
           {data.donors.length ? (
             data.donors.map((item, index) => (
-              <article key={`${item.order}-${item.name}-${index}-card`} className="rounded-2xl border border-gold/20 bg-white p-4 shadow-soft">
+              <article key={`${item.order}-${item.name}-${index}-card`} className="app-panel rounded-2xl p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-xs font-bold text-muted">ลำดับ {item.order || index + 1}</p>
@@ -827,7 +827,7 @@ function ContactFooter({ data }) {
     [Sparkles, data.tiktok],
   ];
   return (
-    <footer id="contact" className="bg-white px-4 pb-28 pt-16 sm:px-6 lg:px-8 lg:pb-12">
+    <footer id="contact" className="bg-transparent px-4 pb-28 pt-10 sm:px-6 lg:px-8 lg:pb-12">
       <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="rounded-[2rem] border border-gold/20 bg-ivory p-6 shadow-soft">
           <div className="flex gap-4">
@@ -868,8 +868,8 @@ function MobileNav({ currentView, onNavigate }) {
     [Phone, "ติดต่อเรา", "contact"],
   ];
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-gold/20 bg-white/92 px-2 pb-[env(safe-area-inset-bottom)] pt-2 shadow-[0_-12px_35px_rgba(11,42,74,0.09)] backdrop-blur-xl" aria-label="เมนูล่าง">
-      <div className="mx-auto grid max-w-xl grid-cols-5">
+    <nav className="fixed bottom-3 left-3 right-3 z-40 rounded-[1.6rem] border border-gold/20 bg-white/86 px-2 py-2 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] shadow-[0_18px_45px_rgba(11,42,74,0.16)] backdrop-blur-xl" aria-label="เมนูล่าง">
+      <div className="mx-auto grid max-w-xl grid-cols-5 gap-1">
         {items.map(([Icon, label, view]) => {
           const isActive = currentView === view;
           const isDonate = view === "donate";
@@ -987,9 +987,9 @@ export default function VisakhaLandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-ivory font-sans text-ink">
+    <div className="app-bg min-h-screen font-sans text-ink">
       <Header data={data} currentView={currentView} onNavigate={handleNavigate} />
-      <main className="pb-24">
+      <main className="pb-28">
         <PageView currentView={currentView} data={data} loadingState={loadingState} onNavigate={handleNavigate} />
       </main>
       <MobileNav currentView={currentView} onNavigate={handleNavigate} />
