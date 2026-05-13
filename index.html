@@ -394,7 +394,7 @@
       <section class="donation-card" aria-labelledby="donation-info-title">
         <div class="qr-box" id="qr-box">
           <span>QR</span>
-          <small>สแกนร่วมทำบุญ</small>
+          <small>ใส่ลิงก์รูป QR ในชีต</small>
         </div>
         <div class="donation-copy">
           <p class="pill-title" id="donation-info-title">ร่วมทำบุญได้ที่</p>
@@ -725,15 +725,18 @@
 
           const items = rows
             .slice(1)
-            .map((row) => ({ title: row[11], text: row[12], icon: row[13] }))
-            .filter((item) => item.title || item.text || item.icon);
+            .map((row) => ({ title: row[11], text: row[12], image: row[13] }))
+            .filter((item) => item.title || item.text || item.image);
 
           activityGrid.replaceChildren();
           items.forEach((item) => {
             const card = document.createElement("article");
             card.className = "activity-card";
+            const media = looksLikeImageUrl(item.image)
+              ? `<img src="${item.image}" alt="${item.title || "รูปกิจกรรม"}" loading="lazy" decoding="async" />`
+              : `<span>${item.image || "✦"}</span>`;
             card.innerHTML = `
-              <div class="activity-icon">${item.icon || "✦"}</div>
+              <div class="activity-media">${media}</div>
               <strong>${item.title || "-"}</strong>
               <span>${item.text || ""}</span>
             `;
