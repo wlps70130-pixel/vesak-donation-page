@@ -20,6 +20,7 @@
 
 html {
   background: var(--bg);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -34,9 +35,9 @@ body {
 }
 
 .page-shell {
-  width: min(760px, 100%);
+  width: min(840px, 100%);
   margin: 0 auto;
-  padding: 18px 14px 28px;
+  padding: clamp(10px, 2.4vw, 24px) clamp(8px, 2.6vw, 20px) clamp(22px, 4vw, 40px);
 }
 
 .site-header {
@@ -45,6 +46,7 @@ body {
   align-items: center;
   gap: 14px;
   padding: 8px 12px 18px;
+  min-width: 0;
 }
 
 .temple-logo {
@@ -82,15 +84,18 @@ body {
 .site-title {
   display: grid;
   gap: 2px;
+  min-width: 0;
 }
 
 .site-title strong {
+  overflow-wrap: anywhere;
   color: #1f2d44;
   font-size: clamp(1.45rem, 4.8vw, 2rem);
   line-height: 1.08;
 }
 
 .site-title span {
+  overflow-wrap: anywhere;
   color: var(--muted);
   font-size: clamp(0.95rem, 3.4vw, 1.15rem);
 }
@@ -99,6 +104,7 @@ body {
   display: grid;
   place-items: center;
   width: 50px;
+  min-width: 44px;
   aspect-ratio: 1;
   border: 0;
   border-radius: 999px;
@@ -189,14 +195,16 @@ p {
 
 h1 {
   margin-bottom: 0;
+  overflow-wrap: anywhere;
   color: #20314d;
-  font-size: clamp(3rem, 10vw, 5.4rem);
+  font-size: clamp(2.45rem, 10vw, 5.4rem);
   line-height: 1.02;
   letter-spacing: 0;
 }
 
 h2 {
   margin: 0;
+  overflow-wrap: anywhere;
   color: #20314d;
   font-size: clamp(1.35rem, 5vw, 2rem);
   line-height: 1.22;
@@ -208,6 +216,7 @@ h2 {
   color: var(--muted);
   font-size: clamp(1rem, 3.6vw, 1.2rem);
   line-height: 1.75;
+  overflow-wrap: anywhere;
 }
 
 .event-meta {
@@ -239,6 +248,7 @@ h2 {
   margin-top: 3px;
   font-size: clamp(0.96rem, 3vw, 1.1rem);
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .activity-strip,
@@ -262,7 +272,7 @@ h2 {
 
 .activity-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   gap: 14px;
 }
 
@@ -318,6 +328,7 @@ h2 {
 }
 
 .info-card {
+  min-width: 0;
   padding: 20px;
   border: 1px solid var(--line);
   border-radius: 20px;
@@ -338,6 +349,7 @@ h2 {
   color: #20314d;
   font-size: 1.12rem;
   line-height: 1.36;
+  overflow-wrap: anywhere;
 }
 
 .info-card p {
@@ -390,7 +402,7 @@ h2 {
 
 .schedule-item {
   display: grid;
-  grid-template-columns: 92px 1fr;
+  grid-template-columns: minmax(72px, 92px) 1fr;
   gap: 14px;
   align-items: start;
 }
@@ -403,11 +415,13 @@ h2 {
 .schedule-item span {
   color: var(--muted);
   line-height: 1.5;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .donation-card {
   display: grid;
-  grid-template-columns: minmax(110px, 170px) 1fr;
+  grid-template-columns: minmax(120px, 170px) minmax(0, 1fr);
   gap: 18px;
   align-items: center;
   padding: 22px;
@@ -465,7 +479,7 @@ h2 {
 
 .donation-card dl div {
   display: grid;
-  grid-template-columns: 94px 1fr;
+  grid-template-columns: minmax(84px, 100px) minmax(0, 1fr);
   gap: 12px;
 }
 
@@ -476,6 +490,7 @@ h2 {
 .donation-card dd {
   margin: 0;
   font-weight: 900;
+  overflow-wrap: anywhere;
 }
 
 .donation-copy > strong {
@@ -504,6 +519,7 @@ h2 {
   display: block;
   margin-top: 4px;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .place-card a {
@@ -518,7 +534,7 @@ h2 {
 
 .social-row {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 10px;
   margin-top: 14px;
 }
@@ -557,6 +573,7 @@ h2 {
   background: linear-gradient(135deg, var(--green), var(--green-dark));
   font: inherit;
   font-weight: 900;
+  cursor: pointer;
 }
 
 .table-status {
@@ -571,13 +588,14 @@ h2 {
 
 .table-wrap {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid var(--line);
   border-radius: 18px;
 }
 
 table {
   width: 100%;
-  min-width: 720px;
+  min-width: min(720px, 190vw);
   border-collapse: separate;
   border-spacing: 0;
 }
@@ -589,6 +607,7 @@ td {
   text-align: left;
   vertical-align: middle;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 th {
@@ -616,7 +635,7 @@ th:first-child {
 td:last-child {
   color: var(--green-dark);
   font-weight: 900;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .empty-cell {
@@ -643,6 +662,48 @@ td:last-child {
 .contact-footer strong {
   font-size: clamp(1.1rem, 4vw, 1.55rem);
   line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 960px) {
+  .page-shell {
+    width: min(920px, calc(100% - 48px));
+  }
+
+  .banner,
+  .activity-strip,
+  .schedule-card,
+  .donation-card,
+  .place-card,
+  .donation-panel,
+  .contact-footer {
+    border-radius: 26px;
+  }
+
+  .cover-frame img,
+  .cover-placeholder {
+    max-height: 560px;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 760px) {
+  .info-grid,
+  .donation-card {
+    grid-template-columns: 1fr;
+  }
+
+  .qr-box {
+    justify-self: center;
+  }
+
+  .section-heading,
+  .panel-heading,
+  .place-card,
+  .contact-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 640px) {
@@ -668,25 +729,72 @@ td:last-child {
     gap: 10px;
   }
 
-  .info-grid,
-  .donation-card {
-    grid-template-columns: 1fr;
-  }
-
-  .section-heading,
-  .panel-heading,
-  .place-card,
-  .contact-footer {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .social-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .schedule-item {
     grid-template-columns: 76px 1fr;
     gap: 10px;
+  }
+}
+
+@media (max-width: 430px) {
+  .site-header {
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    padding: 6px 6px 14px;
+  }
+
+  .temple-logo {
+    width: 48px;
+  }
+
+  .menu-button {
+    width: 44px;
+    font-size: 1.35rem;
+  }
+
+  .banner-copy,
+  .activity-strip,
+  .schedule-card,
+  .donation-card,
+  .place-card,
+  .donation-panel,
+  .contact-footer {
+    padding: 16px;
+  }
+
+  .event-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .activity-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .activity-card {
+    grid-template-columns: auto 1fr;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .activity-card > span {
+    grid-column: 2;
+  }
+
+  .activity-media {
+    width: 58px;
+    grid-row: span 2;
+  }
+
+  .schedule-item {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .donation-card dl div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .social-row {
+    grid-template-columns: 1fr;
   }
 }
