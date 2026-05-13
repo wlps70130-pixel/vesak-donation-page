@@ -281,20 +281,20 @@ function IconBadge({ icon = "flower", className = "" }) {
   );
 }
 
-function Header({ data }) {
+function Header({ data, currentView, onNavigate }) {
   const [open, setOpen] = useState(false);
   const navItems = [
-    ["หน้าหลัก", "#home"],
-    ["วัตถุประสงค์", "#objectives"],
-    ["กำหนดการ", "#schedule"],
-    ["ร่วมทำบุญ", "#donate"],
-    ["ติดต่อเรา", "#contact"],
+    ["หน้าหลัก", "home"],
+    ["วัตถุประสงค์", "objectives"],
+    ["กำหนดการ", "schedule"],
+    ["ร่วมทำบุญ", "donate"],
+    ["ติดต่อเรา", "contact"],
   ];
 
   return (
     <header className="sticky top-0 z-40 border-b border-white/60 bg-ivory/80 backdrop-blur-xl">
       <nav className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8" aria-label="เมนูหลัก">
-        <a href="#home" className="flex min-w-0 items-center gap-3" aria-label="กลับไปด้านบน">
+        <button type="button" onClick={() => onNavigate("home")} className="flex min-w-0 items-center gap-3 text-left" aria-label="กลับไปหน้าหลัก">
           <div className="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full border border-gold/50 bg-white shadow-soft">
             {looksLikeImage(data.logoImage) ? (
               <img src={data.logoImage} alt="โลโก้วัด" className="h-full w-full object-contain p-1.5" loading="eager" />
@@ -306,19 +306,24 @@ function Header({ data }) {
             <p className="truncate text-lg font-bold leading-tight text-ink">{data.siteTitle}</p>
             <p className="truncate text-xs font-semibold uppercase tracking-[0.18em] text-muted">{data.siteSubtitle}</p>
           </div>
-        </a>
+        </button>
 
         <div className="hidden items-center gap-1 lg:flex">
-          {navItems.map(([label, href]) => (
-            <a key={href} href={href} className="rounded-full px-4 py-2 text-sm font-semibold text-ink transition hover:bg-white hover:text-navy">
+          {navItems.map(([label, view]) => (
+            <button
+              key={view}
+              type="button"
+              onClick={() => onNavigate(view)}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition hover:bg-white hover:text-navy ${currentView === view ? "bg-white text-gold shadow-sm" : "text-ink"}`}
+            >
               {label}
-            </a>
+            </button>
           ))}
         </div>
 
-        <a href="#donate" className="hidden min-h-11 items-center rounded-full bg-gold px-5 py-2.5 text-sm font-bold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#b78324] lg:inline-flex">
+        <button type="button" onClick={() => onNavigate("donate")} className="hidden min-h-11 items-center rounded-full bg-gold px-5 py-2.5 text-sm font-bold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#b78324] lg:inline-flex">
           ร่วมทำบุญ
-        </a>
+        </button>
         <button
           type="button"
           className="grid min-h-11 min-w-11 place-items-center rounded-full bg-white text-navy shadow-soft lg:hidden"
@@ -332,10 +337,18 @@ function Header({ data }) {
       {open && (
         <div className="border-t border-gold/15 bg-ivory px-4 py-3 lg:hidden">
           <div className="mx-auto grid max-w-7xl gap-2">
-            {navItems.map(([label, href]) => (
-              <a key={href} href={href} onClick={() => setOpen(false)} className="rounded-2xl bg-white px-4 py-3 text-sm font-bold text-ink shadow-sm">
+            {navItems.map(([label, view]) => (
+              <button
+                key={view}
+                type="button"
+                onClick={() => {
+                  onNavigate(view);
+                  setOpen(false);
+                }}
+                className="rounded-2xl bg-white px-4 py-3 text-left text-sm font-bold text-ink shadow-sm"
+              >
                 {label}
-              </a>
+              </button>
             ))}
           </div>
         </div>
@@ -344,7 +357,7 @@ function Header({ data }) {
   );
 }
 
-function HeroSection({ data }) {
+function HeroSection({ data, onNavigate }) {
   const serviceItems = [
     [HandHeart, "ร่วมทำบุญ"],
     [CalendarCheck, "กำหนดการ"],
@@ -381,7 +394,7 @@ function HeroSection({ data }) {
           <p className="text-lg leading-8 text-muted">ทำบุญ • ปฏิบัติธรรม • ติดตามกิจกรรม</p>
           <div className="mt-8 grid gap-3">
             {featureItems.map(([Icon, title, detail]) => (
-              <a key={title} href={title.includes("ทำบุญ") ? "#donate" : "#schedule"} className="mx-auto flex w-full max-w-sm items-center gap-4 rounded-[1.6rem] bg-white/82 p-4 text-left shadow-soft transition hover:-translate-y-1 xl:mx-0">
+              <button key={title} type="button" onClick={() => onNavigate(title.includes("ทำบุญ") ? "donate" : "schedule")} className="mx-auto flex w-full max-w-sm items-center gap-4 rounded-[1.6rem] bg-white/82 p-4 text-left shadow-soft transition hover:-translate-y-1 xl:mx-0">
                 <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-gold text-white">
                   <Icon size={26} aria-hidden="true" />
                 </span>
@@ -389,7 +402,7 @@ function HeroSection({ data }) {
                   <span className="block text-lg font-black text-navy">{title}</span>
                   <span className="text-sm font-semibold text-muted">{detail}</span>
                 </span>
-              </a>
+              </button>
             ))}
           </div>
         </div>
@@ -446,10 +459,10 @@ function HeroSection({ data }) {
                 <p className="mb-3 text-sm font-black text-navy">บริการหลัก</p>
                 <div className="grid grid-cols-4 gap-3">
                   {serviceItems.map(([Icon, label]) => (
-                    <a key={label} href={label.includes("ร่วม") ? "#donate" : "#schedule"} className="grid min-h-20 place-items-center rounded-2xl bg-white p-2 text-center text-[11px] font-black text-navy shadow-sm transition hover:-translate-y-0.5">
+                    <button key={label} type="button" onClick={() => onNavigate(label.includes("ร่วม") ? "donate" : "schedule")} className="grid min-h-20 place-items-center rounded-2xl bg-white p-2 text-center text-[11px] font-black text-navy shadow-sm transition hover:-translate-y-0.5">
                       <Icon className="text-gold" size={24} aria-hidden="true" />
                       <span>{label}</span>
-                    </a>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -459,7 +472,7 @@ function HeroSection({ data }) {
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-1">
           <MiniSchedulePhone data={data} />
-          <MiniDonationPhone data={data} />
+          <MiniDonationPhone data={data} onNavigate={onNavigate} />
         </div>
       </div>
     </section>
@@ -491,7 +504,7 @@ function MiniSchedulePhone({ data }) {
   );
 }
 
-function MiniDonationPhone({ data }) {
+function MiniDonationPhone({ data, onNavigate }) {
   return (
     <aside className="mx-auto w-full max-w-[320px] rounded-[2.2rem] border-[7px] border-[#101318] bg-navy p-4 text-white shadow-soft">
       <div className="phone-status text-white">
@@ -515,9 +528,9 @@ function MiniDonationPhone({ data }) {
           <div>เลขบัญชี {data.bankAccount}</div>
           <div>ชื่อบัญชี {data.bankAccountName}</div>
         </dl>
-        <a href="#donate" className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-gold font-black text-white">
+        <button type="button" onClick={() => onNavigate("donate")} className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-gold font-black text-white">
           ส่งสลิปทาง Line OA
-        </a>
+        </button>
         <p className="mt-3 text-center text-sm font-bold text-cream">Line OA : {data.lineId}</p>
       </div>
     </aside>
@@ -796,31 +809,94 @@ function ContactFooter({ data }) {
   );
 }
 
-function MobileNav() {
+function MobileNav({ currentView, onNavigate }) {
   const items = [
-    [Home, "หน้าหลัก", "#home"],
-    [Sparkles, "วัตถุประสงค์", "#objectives"],
-    [Heart, "ร่วมทำบุญ", "#donate"],
-    [CalendarDays, "กำหนดการ", "#schedule"],
-    [Phone, "ติดต่อเรา", "#contact"],
+    [Home, "หน้าหลัก", "home"],
+    [Sparkles, "วัตถุประสงค์", "objectives"],
+    [Heart, "ร่วมทำบุญ", "donate"],
+    [CalendarDays, "กำหนดการ", "schedule"],
+    [Phone, "ติดต่อเรา", "contact"],
   ];
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-gold/20 bg-white/92 px-2 pb-[env(safe-area-inset-bottom)] pt-2 shadow-[0_-12px_35px_rgba(11,42,74,0.09)] backdrop-blur-xl lg:hidden" aria-label="เมนูมือถือ">
-      <div className="mx-auto grid max-w-md grid-cols-5">
-        {items.map(([Icon, label, href]) => (
-          <a key={href} href={href} className="flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl text-[11px] font-bold text-navy transition hover:bg-ivory" aria-label={label}>
+    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-gold/20 bg-white/92 px-2 pb-[env(safe-area-inset-bottom)] pt-2 shadow-[0_-12px_35px_rgba(11,42,74,0.09)] backdrop-blur-xl" aria-label="เมนูล่าง">
+      <div className="mx-auto grid max-w-xl grid-cols-5">
+        {items.map(([Icon, label, view]) => (
+          <button
+            key={view}
+            type="button"
+            onClick={() => onNavigate(view)}
+            className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl text-[11px] font-bold transition hover:bg-ivory sm:text-xs ${currentView === view ? "bg-ivory text-gold" : "text-navy"}`}
+            aria-label={label}
+            aria-current={currentView === view ? "page" : undefined}
+          >
             <Icon size={20} aria-hidden="true" />
             <span>{label}</span>
-          </a>
+          </button>
         ))}
       </div>
     </nav>
   );
 }
 
+function PageView({ currentView, data, loadingState, onNavigate }) {
+  if (currentView === "objectives") {
+    return (
+      <>
+        <ObjectiveSection data={data} />
+        <MeritSection data={data} />
+      </>
+    );
+  }
+
+  if (currentView === "donate") {
+    return (
+      <>
+        <DonationSection data={data} />
+        <DonorTable data={data} />
+      </>
+    );
+  }
+
+  if (currentView === "schedule") {
+    return (
+      <>
+        <ScheduleTimeline data={data} />
+        <ActivitySection data={data} />
+      </>
+    );
+  }
+
+  if (currentView === "contact") {
+    return <ContactFooter data={data} />;
+  }
+
+  return (
+    <>
+      <HeroSection data={data} onNavigate={onNavigate} />
+      <InfoBar data={data} />
+      {loadingState === "error" && (
+        <div className="mx-auto mt-6 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="rounded-2xl border border-gold/25 bg-white px-4 py-3 text-sm font-semibold text-muted">
+            ไม่สามารถดึงข้อมูลจาก Google Sheet ได้ในขณะนี้ หน้าเว็บจะแสดงข้อมูลสำรองไว้ก่อน
+          </p>
+        </div>
+      )}
+    </>
+  );
+}
+
+function viewFromHash() {
+  const hash = window.location.hash.replace("#", "");
+  if (["home", "objectives", "donate", "schedule", "contact"].includes(hash)) {
+    return hash;
+  }
+  return "home";
+}
+
 export default function VisakhaLandingPage() {
   const [rows, setRows] = useState([]);
   const [loadingState, setLoadingState] = useState("loading");
+  const [currentView, setCurrentView] = useState(viewFromHash);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -846,29 +922,19 @@ export default function VisakhaLandingPage() {
   }, []);
 
   const data = useMemo(() => buildData(rows), [rows]);
+  const handleNavigate = (view) => {
+    setCurrentView(view);
+    window.history.replaceState(null, "", `#${view}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <div className="min-h-screen font-sans text-ink">
-      <Header data={data} />
-      <main>
-        <HeroSection data={data} />
-        <InfoBar data={data} />
-        {loadingState === "error" && (
-          <div className="mx-auto mt-6 max-w-7xl px-4 sm:px-6 lg:px-8">
-            <p className="rounded-2xl border border-gold/25 bg-white px-4 py-3 text-sm font-semibold text-muted">
-              ไม่สามารถดึงข้อมูลจาก Google Sheet ได้ในขณะนี้ หน้าเว็บจะแสดงข้อมูลสำรองไว้ก่อน
-            </p>
-          </div>
-        )}
-        <ObjectiveSection data={data} />
-        <ActivitySection data={data} />
-        <ScheduleTimeline data={data} />
-        <DonationSection data={data} />
-        <MeritSection data={data} />
-        <DonorTable data={data} />
+    <div className="min-h-screen bg-ivory font-sans text-ink">
+      <Header data={data} currentView={currentView} onNavigate={handleNavigate} />
+      <main className="pb-24">
+        <PageView currentView={currentView} data={data} loadingState={loadingState} onNavigate={handleNavigate} />
       </main>
-      <ContactFooter data={data} />
-      <MobileNav />
+      <MobileNav currentView={currentView} onNavigate={handleNavigate} />
     </div>
   );
 }
