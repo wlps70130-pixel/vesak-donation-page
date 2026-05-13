@@ -1,0 +1,742 @@
+import {
+  AppWindow,
+  BookOpen,
+  CalendarDays,
+  Camera,
+  ChevronRight,
+  Clock3,
+  Flower2,
+  Heart,
+  Home,
+  Landmark,
+  MapPin,
+  Menu,
+  MessageCircle,
+  Network,
+  Phone,
+  QrCode,
+  RadioTower,
+  ShieldCheck,
+  Smartphone,
+  Sparkles,
+  Wifi,
+  X,
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+
+const SHEET_CSV_URL =
+  "https://docs.google.com/spreadsheets/d/1SUxJaPWNNUWT2H1l0jgulf9ITJWhfOl97lvfKjttoAQ/export?format=csv&gid=1389131251";
+
+const DEFAULTS = {
+  eyebrow: "ขอเชิญร่วม",
+  siteTitle: "วันวิสาขบูชา",
+  siteSubtitle: "VISAKHA DHAMMAKAYARAM",
+  heroTitle: "ปฏิบัติธรรม วันวิสาขบูชา",
+  heroDate: "ขึ้น 15 ค่ำ เดือน 7 ปี 2569",
+  heroText:
+    "น้อมรำลึกถึงพระสัมมาสัมพุทธเจ้า ร่วมทำบุญ บำรุงพระพุทธศาสนา และสืบสานประเพณีอันดีงามด้วยจิตศรัทธา",
+  eventDate: "วันอาทิตย์ที่ 31 พฤษภาคม 2569",
+  eventPlace: "ณ พระมหาเจดีย์มหารัชมงคล วัดหลวงพ่อสดฯ",
+  eventTime: "09.00 น. เป็นต้นไป",
+  objectiveTitle: "วัตถุประสงค์การทอดผ้าป่าสามัคคี",
+  objectiveSubtitle:
+    "เพื่อสมทบทุนติดตั้งระบบโครงข่ายสัญญาณและระบบความปลอดภัยภายในวัด",
+  objectiveIntro:
+    "การทอดผ้าป่าสามัคคีในวันวิสาขบูชาครั้งนี้ จัดขึ้นเพื่อสมทบทุนในการพัฒนาระบบเทคโนโลยีสารสนเทศ ระบบสื่อสาร และระบบความปลอดภัยภายในวัด ให้สามารถรองรับการบริหารกิจการคณะสงฆ์ การเผยแผ่ธรรมะ และการดูแลพื้นที่วัดได้อย่างมีประสิทธิภาพมากยิ่งขึ้น",
+  donationHeading: "ร่วมบุญออนไลน์",
+  donationSubtitle: "สะดวก รวดเร็ว ได้บุญ",
+  bankName: "ธนาคารกรุงเทพ",
+  bankAccount: "422-0-31266-6",
+  bankAccountName: "วัดหลวงพ่อสดฯ",
+  slipNote: "หลังโอนเงินแล้ว โปรดส่งสลิปเพื่อออกใบอนุโมทนาบัตร",
+  lineId: "@info.wat06",
+  donorHeading: "ร่วมเป็นเจ้าภาพผ้าป่าสามัคคี",
+  contactPhone: "090-595-5162",
+  facebook: "วัดหลวงพ่อสดฯ",
+  tiktok: "วัดหลวงพ่อสดฯ",
+  location:
+    "ณ พระมหาเจดีย์มหารัชมงคล วัดหลวงพ่อสดฯ อ.ดำเนินสะดวก จ.ราชบุรี",
+  mapLabel: "แผนที่",
+  quote: "การให้ธรรมะ ชนะการให้ทั้งปวง",
+  quoteBy: "— พุทธพจน์ —",
+};
+
+const DEFAULT_OBJECTIVES = [
+  {
+    title: "แอปพลิเคชันบริหารกิจการคณะสงฆ์",
+    detail:
+      "จัดทำระบบแอปพลิเคชันเพื่อสนับสนุนงานบริหารจัดการภายในวัด งานข้อมูลกิจกรรม งานสื่อสาร และงานประสานงานของคณะสงฆ์ให้เป็นระบบมากขึ้น",
+    icon: "app",
+  },
+  {
+    title: "ระบบเผยแผ่ธรรมะออนไลน์",
+    detail:
+      "พัฒนาช่องทางดิจิทัลสำหรับเผยแผ่ธรรมะ ข่าวสาร กิจกรรมบุญ ตารางปฏิบัติธรรม และสื่อธรรมะ ให้ญาติโยมเข้าถึงได้ง่ายและต่อเนื่อง",
+    icon: "broadcast",
+  },
+  {
+    title: "ระบบโครงข่ายสัญญาณภายในวัด",
+    detail:
+      "วางระบบ Network และ Internet ภายในพื้นที่วัด เพื่อรองรับระบบถ่ายทอดสด ระบบสำนักงาน ระบบกล้องวงจรปิด และการเชื่อมต่ออุปกรณ์ต่าง ๆ",
+    icon: "network",
+  },
+  {
+    title: "กล้องวงจรปิดและระบบความปลอดภัย",
+    detail:
+      "ติดตั้งกล้องวงจรปิดรอบพื้นที่วัด เพื่อดูแลศาสนสถาน ทรัพย์สินของวัด พระภิกษุสามเณร เจ้าหน้าที่ และญาติโยมที่มาร่วมกิจกรรม",
+    icon: "shield",
+  },
+];
+
+const DEFAULT_ACTIVITIES = [
+  {
+    title: "ปฏิบัติธรรม",
+    detail: "ฟังธรรม เจริญสติ และน้อมใจให้สงบผ่องใส",
+  },
+  {
+    title: "ทอดผ้าป่า",
+    detail: "ร่วมทำบุญสมทบทุนพัฒนาระบบภายในวัด",
+  },
+  {
+    title: "เวียนเทียน",
+    detail: "เวียนเทียนรอบองค์พระเจดีย์ด้วยจิตศรัทธา",
+  },
+];
+
+const DEFAULT_SCHEDULE = [
+  ["09.00 น.", "ลงทะเบียน / ตักบาตร / สวดมนต์"],
+  ["09.30 น.", "พระธรรมเทศนา 1"],
+  ["10.30 น.", "พิธีทอดผ้าป่าสามัคคี"],
+  ["11.00 น.", "เจริญภาวนา"],
+  ["12.30 น.", "รับประทานอาหาร / พักผ่อน"],
+  ["13.09 น.", "เวียนเทียนรอบพระเจดีย์"],
+];
+
+const DEFAULT_BENEFITS = [
+  ["ทำจิตใจให้ผ่องใส", "sparkles"],
+  ["เสริมบุญ เสริมบารมี", "flower"],
+  ["สืบสานพระพุทธศาสนา", "book"],
+  ["ร่วมสร้างสังคมแห่งความดีงาม", "heart"],
+];
+
+const ICONS = {
+  app: AppWindow,
+  smartphone: Smartphone,
+  broadcast: RadioTower,
+  book: BookOpen,
+  network: Network,
+  wifi: Wifi,
+  shield: ShieldCheck,
+  camera: Camera,
+  flower: Flower2,
+  heart: Heart,
+  sparkles: Sparkles,
+  home: Home,
+};
+
+function parseCsv(csv) {
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let quoted = false;
+
+  for (let i = 0; i < csv.length; i += 1) {
+    const char = csv[i];
+    const next = csv[i + 1];
+    if (char === '"' && quoted && next === '"') {
+      cell += '"';
+      i += 1;
+    } else if (char === '"') {
+      quoted = !quoted;
+    } else if (char === "," && !quoted) {
+      row.push(cell.trim());
+      cell = "";
+    } else if ((char === "\n" || char === "\r") && !quoted) {
+      if (char === "\r" && next === "\n") i += 1;
+      row.push(cell.trim());
+      rows.push(row);
+      row = [];
+      cell = "";
+    } else {
+      cell += char;
+    }
+  }
+  if (cell || row.length) {
+    row.push(cell.trim());
+    rows.push(row);
+  }
+  return rows.filter((items) => items.some(Boolean));
+}
+
+function looksLikeImage(value) {
+  return /^https?:\/\/.+\.(png|jpe?g|webp|gif|avif)(\?.*)?$/i.test(value || "");
+}
+
+function settingsFromRows(rows) {
+  const settings = {};
+  rows.forEach((row) => {
+    const key = row[5]?.trim();
+    const value = row[6]?.trim();
+    if (key && value) settings[key] = value;
+  });
+  return settings;
+}
+
+function findSetting(settings, keys, fallback = "") {
+  for (const key of keys) {
+    const exact = settings[key];
+    if (exact) return exact;
+    const foundKey = Object.keys(settings).find((item) => item.includes(key));
+    if (foundKey) return settings[foundKey];
+  }
+  return fallback;
+}
+
+function buildData(rows) {
+  const settings = settingsFromRows(rows);
+  const donors = rows
+    .slice(1)
+    .map((row) => ({
+      order: row[0],
+      type: row[1],
+      name: row[2],
+      amount: row[3],
+    }))
+    .filter((item) => item.order || item.type || item.name || item.amount);
+
+  const schedule = rows
+    .slice(1)
+    .map((row) => [row[8], row[9]])
+    .filter(([time, detail]) => time || detail);
+
+  const activities = rows
+    .slice(1)
+    .map((row) => ({ title: row[11], detail: row[12], image: row[13] }))
+    .filter((item) => item.title || item.detail || item.image);
+
+  const objectives = rows
+    .slice(1)
+    .map((row) => ({ title: row[15], detail: row[16], icon: row[17] }))
+    .filter((item) => item.title || item.detail);
+
+  const benefits = rows
+    .slice(1)
+    .map((row) => [row[19], row[20]])
+    .filter(([title]) => title);
+
+  const coverImage = findSetting(
+    settings,
+    ["ลิงก์รูปหน้าปก", "รูปหน้าปก", "ข้อความรูปปก"],
+    "",
+  );
+
+  return {
+    ...DEFAULTS,
+    siteTitle: findSetting(settings, ["ชื่อเว็บ", "ชื่อป้ายหลัก"], DEFAULTS.siteTitle),
+    siteSubtitle: findSetting(settings, ["subtitle", "ชื่อกิจกรรมรอง"], DEFAULTS.siteSubtitle),
+    eyebrow: findSetting(settings, ["งานบุญประจำปี", "ข้อความนำ"], DEFAULTS.eyebrow),
+    heroTitle: findSetting(settings, ["ชื่อกิจกรรมหลัก", "ชื่อป้ายหลัก"], DEFAULTS.heroTitle),
+    heroDate: findSetting(settings, ["วันพระ", "ขึ้น 15"], DEFAULTS.heroDate),
+    heroText: findSetting(settings, ["คำอธิบายป้ายหลัก", "แนวคิดของงาน"], DEFAULTS.heroText),
+    eventDate: findSetting(settings, ["วันที่จัดงาน"], DEFAULTS.eventDate),
+    eventPlace: findSetting(settings, ["สถานที่", "สถานที่จัดงาน"], DEFAULTS.eventPlace),
+    eventTime: findSetting(settings, ["เวลาเริ่มงาน"], DEFAULTS.eventTime),
+    objectiveTitle: findSetting(settings, ["หัวข้อวัตถุประสงค์"], DEFAULTS.objectiveTitle),
+    objectiveSubtitle: findSetting(settings, ["คำอธิบายวัตถุประสงค์"], DEFAULTS.objectiveSubtitle),
+    objectiveIntro: findSetting(settings, ["เนื้อหาวัตถุประสงค์", "รายละเอียดวัตถุประสงค์"], DEFAULTS.objectiveIntro),
+    donationHeading: findSetting(settings, ["หัวข้อร่วมทำบุญ"], DEFAULTS.donationHeading),
+    bankName: findSetting(settings, ["ธนาคาร"], DEFAULTS.bankName),
+    bankAccount: findSetting(settings, ["เลขที่บัญชี", "เลขบัญชี"], DEFAULTS.bankAccount),
+    bankAccountName: findSetting(settings, ["ชื่อบัญชี"], DEFAULTS.bankAccountName),
+    qrImage: findSetting(settings, ["ลิงก์ QR ทำบุญ", "QR"], ""),
+    logoImage: findSetting(settings, ["ลิงก์โลโก้วัด", "โลโก้วัด"], ""),
+    coverImage: looksLikeImage(coverImage) ? coverImage : "",
+    lineId: findSetting(settings, ["Line ID", "ติดต่อสอบถาม"], DEFAULTS.lineId).replace("Line ID:", "").trim(),
+    contactPhone: findSetting(settings, ["โทร", "เบอร์โทร"], DEFAULTS.contactPhone),
+    facebook: findSetting(settings, ["Facebook"], DEFAULTS.facebook),
+    tiktok: findSetting(settings, ["TikTok"], DEFAULTS.tiktok),
+    mapLabel: findSetting(settings, ["แผนที่"], DEFAULTS.mapLabel),
+    location: findSetting(settings, ["สถานที่ด้านล่าง", "สถานที่"], DEFAULTS.location),
+    donorHeading: findSetting(settings, ["หัวข้อก่อนตาราง", "ร่วมเป็นเจ้าภาพ"], DEFAULTS.donorHeading),
+    quote: findSetting(settings, ["พุทธพจน์", "quote"], DEFAULTS.quote),
+    donors,
+    schedule: schedule.length ? schedule : DEFAULT_SCHEDULE,
+    activities: activities.length ? activities : DEFAULT_ACTIVITIES,
+    objectives: objectives.length ? objectives : DEFAULT_OBJECTIVES,
+    benefits: benefits.length ? benefits : DEFAULT_BENEFITS,
+  };
+}
+
+function IconBadge({ icon = "flower", className = "" }) {
+  const Icon = ICONS[icon?.toLowerCase?.()] || Flower2;
+  return (
+    <span className={`inline-grid h-12 w-12 place-items-center rounded-2xl bg-softblue text-navy ring-1 ring-gold/25 ${className}`}>
+      <Icon size={24} strokeWidth={1.8} aria-hidden="true" />
+    </span>
+  );
+}
+
+function Header({ data }) {
+  const [open, setOpen] = useState(false);
+  const navItems = [
+    ["หน้าหลัก", "#home"],
+    ["วัตถุประสงค์", "#objectives"],
+    ["กำหนดการ", "#schedule"],
+    ["ร่วมทำบุญ", "#donate"],
+    ["ติดต่อเรา", "#contact"],
+  ];
+
+  return (
+    <header className="sticky top-0 z-40 border-b border-white/60 bg-ivory/80 backdrop-blur-xl">
+      <nav className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8" aria-label="เมนูหลัก">
+        <a href="#home" className="flex min-w-0 items-center gap-3" aria-label="กลับไปด้านบน">
+          <div className="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full border border-gold/50 bg-white shadow-soft">
+            {looksLikeImage(data.logoImage) ? (
+              <img src={data.logoImage} alt="โลโก้วัด" className="h-full w-full object-contain p-1.5" loading="eager" />
+            ) : (
+              <Landmark className="text-gold" size={24} aria-hidden="true" />
+            )}
+          </div>
+          <div className="min-w-0">
+            <p className="truncate text-lg font-bold leading-tight text-ink">{data.siteTitle}</p>
+            <p className="truncate text-xs font-semibold uppercase tracking-[0.18em] text-muted">{data.siteSubtitle}</p>
+          </div>
+        </a>
+
+        <div className="hidden items-center gap-1 lg:flex">
+          {navItems.map(([label, href]) => (
+            <a key={href} href={href} className="rounded-full px-4 py-2 text-sm font-semibold text-ink transition hover:bg-white hover:text-navy">
+              {label}
+            </a>
+          ))}
+        </div>
+
+        <a href="#donate" className="hidden min-h-11 items-center rounded-full bg-gold px-5 py-2.5 text-sm font-bold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#b78324] lg:inline-flex">
+          ร่วมทำบุญ
+        </a>
+        <button
+          type="button"
+          className="grid min-h-11 min-w-11 place-items-center rounded-full bg-white text-navy shadow-soft lg:hidden"
+          aria-label={open ? "ปิดเมนู" : "เปิดเมนู"}
+          aria-expanded={open}
+          onClick={() => setOpen((value) => !value)}
+        >
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </nav>
+      {open && (
+        <div className="border-t border-gold/15 bg-ivory px-4 py-3 lg:hidden">
+          <div className="mx-auto grid max-w-7xl gap-2">
+            {navItems.map(([label, href]) => (
+              <a key={href} href={href} onClick={() => setOpen(false)} className="rounded-2xl bg-white px-4 py-3 text-sm font-bold text-ink shadow-sm">
+                {label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </header>
+  );
+}
+
+function HeroSection({ data }) {
+  return (
+    <section id="home" className="relative overflow-hidden px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pb-20 lg:pt-14">
+      <div className="absolute inset-x-0 top-0 -z-10 h-[620px] thai-pattern opacity-50" aria-hidden="true" />
+      <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.02fr_0.98fr]">
+        <div className="max-w-2xl">
+          <p className="mb-4 inline-flex rounded-full border border-gold/30 bg-white/75 px-4 py-2 text-sm font-bold text-gold shadow-sm">
+            {data.eyebrow}
+          </p>
+          <h1 className="text-balance text-4xl font-black leading-tight text-navy sm:text-5xl lg:text-6xl">
+            {data.heroTitle}
+          </h1>
+          <p className="mt-4 text-xl font-bold text-gold sm:text-2xl">{data.heroDate}</p>
+          <p className="mt-5 max-w-xl text-pretty text-base leading-8 text-muted sm:text-lg">
+            {data.heroText}
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href="#donate" className="inline-flex min-h-12 items-center justify-center rounded-full bg-gold px-6 py-3 font-bold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#b78324]">
+              ร่วมทำบุญออนไลน์
+            </a>
+            <a href="#schedule" className="inline-flex min-h-12 items-center justify-center rounded-full border border-gold/35 bg-white px-6 py-3 font-bold text-navy transition hover:-translate-y-0.5 hover:bg-softblue">
+              ดูกำหนดการ
+            </a>
+          </div>
+        </div>
+
+        <div className="relative mx-auto w-full max-w-xl">
+          <div className="absolute left-1/2 top-9 h-64 w-64 -translate-x-1/2 rounded-full bg-gold/20 blur-3xl" aria-hidden="true" />
+          <div className="absolute bottom-8 left-0 right-0 h-40 bg-navy/10 temple-silhouette" aria-hidden="true" />
+          <div className="glass-card relative overflow-hidden rounded-[2rem] border border-gold/25 p-5 shadow-glow">
+            <div className="absolute right-4 top-4 h-16 w-16 bg-cream/80 hero-lotus" aria-hidden="true" />
+            <div className="aspect-[3/2] overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-white via-ivory to-softblue">
+              {data.coverImage ? (
+                <img src={data.coverImage} alt="ภาพปกงานวันวิสาขบูชา" className="h-full w-full object-cover" loading="eager" />
+              ) : (
+                <div className="grid h-full place-items-center px-8 text-center">
+                  <div>
+                    <div className="mx-auto mb-5 grid h-32 w-32 place-items-center rounded-full bg-gold/15 shadow-glow">
+                      <Landmark className="text-gold" size={70} strokeWidth={1.4} aria-hidden="true" />
+                    </div>
+                    <p className="text-2xl font-black text-navy">พระพุทธรูปสีทอง</p>
+                    <p className="mt-2 text-sm text-muted">ใส่ลิงก์รูปหน้าปกใน Google Sheet เพื่อเปลี่ยนภาพนี้</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InfoBar({ data }) {
+  const items = [
+    [CalendarDays, data.eventDate],
+    [MapPin, data.eventPlace],
+    [Clock3, data.eventTime],
+  ];
+  return (
+    <section className="px-4 sm:px-6 lg:px-8" aria-label="ข้อมูลสำคัญของงาน">
+      <div className="mx-auto grid max-w-7xl gap-4 rounded-[1.75rem] border border-gold/20 bg-white/82 p-3 shadow-soft backdrop-blur md:grid-cols-3">
+        {items.map(([Icon, text], index) => (
+          <div key={text} className="flex min-h-[88px] items-center gap-4 rounded-2xl bg-ivory/70 px-4 py-4">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-navy text-gold">
+              <Icon size={23} aria-hidden="true" />
+            </span>
+            <p className="text-base font-bold leading-7 text-ink">{text}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ObjectiveSection({ data }) {
+  return (
+    <section id="objectives" className="relative overflow-hidden px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <div className="absolute inset-0 -z-10 bg-ivory circuit-pattern opacity-70" aria-hidden="true" />
+      <div className="mx-auto max-w-7xl">
+        <div className="max-w-3xl">
+          <p className="text-sm font-black uppercase tracking-[0.2em] text-gold">Merit Technology</p>
+          <h2 className="mt-3 text-3xl font-black leading-tight text-navy sm:text-4xl">{data.objectiveTitle}</h2>
+          <p className="mt-4 text-lg font-bold text-ink">{data.objectiveSubtitle}</p>
+          <p className="mt-4 text-base leading-8 text-muted">{data.objectiveIntro}</p>
+        </div>
+        <div className="mt-10 grid gap-5 md:grid-cols-2">
+          {data.objectives.map((item) => (
+            <article key={item.title} className="glass-card rounded-2xl border border-gold/20 p-6 shadow-soft transition hover:-translate-y-1 hover:border-gold/40">
+              <IconBadge icon={item.icon} />
+              <h3 className="mt-5 text-xl font-black text-navy">{item.title}</h3>
+              <p className="mt-3 text-base leading-8 text-muted">{item.detail}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ActivitySection({ data }) {
+  return (
+    <section className="px-4 py-16 sm:px-6 lg:px-8" aria-labelledby="activity-title">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.2em] text-gold">Activities</p>
+            <h2 id="activity-title" className="mt-3 text-3xl font-black text-navy sm:text-4xl">กิจกรรมภายในงาน</h2>
+          </div>
+          <p className="max-w-xl text-base leading-7 text-muted">ร่วมปฏิบัติบูชา ทำบุญ และสืบสานประเพณีวันสำคัญทางพระพุทธศาสนาอย่างสงบงาม</p>
+        </div>
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {data.activities.slice(0, 3).map((item, index) => (
+            <article key={`${item.title}-${index}`} className="group overflow-hidden rounded-2xl border border-gold/15 bg-white shadow-soft transition hover:-translate-y-1">
+              <div className="aspect-[4/3] bg-ivory">
+                {looksLikeImage(item.image) ? (
+                  <img src={item.image} alt={`รูปกิจกรรม${item.title}`} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+                ) : (
+                  <div className="grid h-full place-items-center bg-gradient-to-br from-softblue via-white to-cream">
+                    <IconBadge icon={index === 0 ? "flower" : index === 1 ? "heart" : "sparkles"} className="h-16 w-16" />
+                  </div>
+                )}
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-black text-navy">{item.title}</h3>
+                <p className="mt-2 leading-7 text-muted">{item.detail}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ScheduleTimeline({ data }) {
+  return (
+    <section id="schedule" className="bg-white px-4 py-16 sm:px-6 lg:px-8" aria-labelledby="schedule-title">
+      <div className="mx-auto max-w-5xl rounded-[2rem] border border-gold/20 bg-ivory/70 p-5 shadow-soft sm:p-8">
+        <div className="mb-8 flex items-center gap-4">
+          <IconBadge icon="book" />
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.2em] text-gold">Timeline</p>
+            <h2 id="schedule-title" className="text-3xl font-black text-navy">กำหนดการ</h2>
+          </div>
+        </div>
+        <div className="space-y-4">
+          {data.schedule.map(([time, detail], index) => (
+            <div key={`${time}-${index}`} className="grid gap-3 rounded-2xl bg-white p-4 shadow-sm sm:grid-cols-[120px_1fr] sm:items-center">
+              <time className="inline-flex items-center gap-2 font-black text-gold">
+                <Clock3 size={18} aria-hidden="true" />
+                {time}
+              </time>
+              <p className="text-base font-semibold leading-7 text-ink">{detail}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-6 text-sm text-muted">กำหนดการอาจเปลี่ยนแปลงได้ตามความเหมาะสม</p>
+      </div>
+    </section>
+  );
+}
+
+function DonationSection({ data }) {
+  return (
+    <section id="donate" className="px-4 py-16 sm:px-6 lg:px-8" aria-labelledby="donate-title">
+      <div className="mx-auto grid max-w-7xl gap-8 rounded-[2rem] border border-gold/35 bg-navy p-5 text-white shadow-soft sm:p-8 lg:grid-cols-[0.85fr_1.15fr] lg:p-10">
+        <div>
+          <p className="inline-flex rounded-full bg-gold px-4 py-2 text-sm font-black text-white">ร่วมทำบุญ</p>
+          <h2 id="donate-title" className="mt-5 text-3xl font-black sm:text-4xl">{data.donationHeading}</h2>
+          <p className="mt-3 text-lg font-semibold text-cream">{data.donationSubtitle}</p>
+          <p className="mt-6 leading-8 text-white/78">{data.slipNote}</p>
+          <a href={`https://line.me/R/ti/p/${encodeURIComponent(data.lineId)}`} className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 font-black text-white transition hover:-translate-y-0.5 hover:bg-[#b78324]">
+            <MessageCircle size={20} aria-hidden="true" />
+            ส่งสลิปทาง Line OA
+          </a>
+        </div>
+        <div className="grid gap-5 md:grid-cols-[220px_1fr] md:items-center">
+          <div className="mx-auto w-full max-w-[220px] overflow-hidden rounded-2xl border border-gold/40 bg-white p-3 shadow-glow">
+            <div className="aspect-[4/5] overflow-hidden rounded-xl bg-ivory">
+              {looksLikeImage(data.qrImage) ? (
+                <img src={data.qrImage} alt="QR Code สำหรับร่วมทำบุญ" className="h-full w-full object-contain" loading="lazy" />
+              ) : (
+                <div className="grid h-full place-items-center px-5 text-center text-navy">
+                  <div>
+                    <QrCode className="mx-auto text-gold" size={72} aria-hidden="true" />
+                    <p className="mt-4 text-sm font-bold">ใส่ลิงก์รูป QR ใน Google Sheet</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="rounded-2xl bg-white/8 p-5 ring-1 ring-white/12">
+            <dl className="grid gap-4">
+              <div>
+                <dt className="text-sm text-white/60">ธนาคาร</dt>
+                <dd className="text-xl font-black text-cream">{data.bankName}</dd>
+              </div>
+              <div>
+                <dt className="text-sm text-white/60">เลขบัญชี</dt>
+                <dd className="font-mono text-3xl font-black tracking-wide text-gold">{data.bankAccount}</dd>
+              </div>
+              <div>
+                <dt className="text-sm text-white/60">ชื่อบัญชี</dt>
+                <dd className="text-xl font-black text-cream">{data.bankAccountName}</dd>
+              </div>
+              <div>
+                <dt className="text-sm text-white/60">Line OA</dt>
+                <dd className="text-xl font-black text-cream">{data.lineId}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MeritSection({ data }) {
+  return (
+    <section className="px-4 py-14 sm:px-6 lg:px-8" aria-labelledby="merit-title">
+      <div className="mx-auto max-w-7xl">
+        <h2 id="merit-title" className="text-center text-3xl font-black text-navy sm:text-4xl">อานิสงส์แห่งการร่วมบุญ</h2>
+        <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {data.benefits.map(([title, icon]) => (
+            <div key={title} className="rounded-2xl border border-gold/15 bg-white p-5 text-center shadow-soft">
+              <IconBadge icon={icon} className="mx-auto" />
+              <p className="mt-4 font-black leading-7 text-ink">{title}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DonorTable({ data }) {
+  return (
+    <section className="px-4 py-16 sm:px-6 lg:px-8" aria-labelledby="donor-title">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.2em] text-gold">Sponsors</p>
+            <h2 id="donor-title" className="mt-2 flex items-center gap-3 text-3xl font-black text-navy">
+              <Heart className="text-gold" aria-hidden="true" />
+              {data.donorHeading}
+            </h2>
+          </div>
+          <p className="text-sm text-muted">รายชื่ออัปเดตจาก Google Sheet</p>
+        </div>
+        <div className="overflow-hidden rounded-2xl border border-gold/20 bg-white shadow-soft">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gold/15">
+              <thead className="bg-ivory text-left text-sm font-black text-navy">
+                <tr>
+                  <th className="px-4 py-4">ลำดับ</th>
+                  <th className="px-4 py-4">ประเภท</th>
+                  <th className="px-4 py-4">ชื่อ / คณะ</th>
+                  <th className="px-4 py-4 text-right">จำนวนทำบุญ</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gold/10 text-sm">
+                {data.donors.length ? (
+                  data.donors.map((item, index) => (
+                    <tr key={`${item.order}-${item.name}-${index}`} className="transition hover:bg-softblue/45">
+                      <td className="whitespace-nowrap px-4 py-4 font-bold text-gold">{item.order || index + 1}</td>
+                      <td className="min-w-[220px] px-4 py-4 font-semibold text-ink">{item.type}</td>
+                      <td className="min-w-[220px] px-4 py-4 text-muted">{item.name}</td>
+                      <td className="whitespace-nowrap px-4 py-4 text-right font-black text-navy">{item.amount}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="px-4 py-8 text-center text-muted">ยังไม่มีรายชื่อในตารางทำบุญ</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactFooter({ data }) {
+  const contacts = [
+    [Phone, data.contactPhone],
+    [MessageCircle, data.lineId],
+    [Home, data.facebook],
+    [Sparkles, data.tiktok],
+  ];
+  return (
+    <footer id="contact" className="bg-white px-4 pb-28 pt-16 sm:px-6 lg:px-8 lg:pb-12">
+      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="rounded-[2rem] border border-gold/20 bg-ivory p-6 shadow-soft">
+          <div className="flex gap-4">
+            <IconBadge icon="home" />
+            <div>
+              <h2 className="text-2xl font-black text-navy">ติดต่อสอบถาม</h2>
+              <p className="mt-2 leading-8 text-muted">{data.location}</p>
+              <p className="mt-2 font-bold text-gold">{data.mapLabel}</p>
+            </div>
+          </div>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            {contacts.map(([Icon, text], index) => (
+              <div key={`${text}-${index}`} className="flex min-h-12 items-center gap-3 rounded-2xl bg-white px-4 py-3 font-bold text-ink">
+                <Icon size={20} className="text-gold" aria-hidden="true" />
+                <span>{text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <blockquote className="grid place-items-center rounded-[2rem] border border-gold/20 bg-navy p-8 text-center text-white shadow-soft">
+          <div>
+            <Flower2 className="mx-auto mb-5 text-gold" size={42} aria-hidden="true" />
+            <p className="text-2xl font-black leading-10">“{data.quote}”</p>
+            <cite className="mt-4 block not-italic text-cream">{data.quoteBy}</cite>
+          </div>
+        </blockquote>
+      </div>
+    </footer>
+  );
+}
+
+function MobileNav() {
+  const items = [
+    [Home, "หน้าหลัก", "#home"],
+    [Sparkles, "วัตถุประสงค์", "#objectives"],
+    [Heart, "ร่วมทำบุญ", "#donate"],
+    [CalendarDays, "กำหนดการ", "#schedule"],
+    [Phone, "ติดต่อเรา", "#contact"],
+  ];
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-gold/20 bg-white/92 px-2 pb-[env(safe-area-inset-bottom)] pt-2 shadow-[0_-12px_35px_rgba(11,42,74,0.09)] backdrop-blur-xl lg:hidden" aria-label="เมนูมือถือ">
+      <div className="mx-auto grid max-w-md grid-cols-5">
+        {items.map(([Icon, label, href]) => (
+          <a key={href} href={href} className="flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl text-[11px] font-bold text-navy transition hover:bg-ivory" aria-label={label}>
+            <Icon size={20} aria-hidden="true" />
+            <span>{label}</span>
+          </a>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+export default function VisakhaLandingPage() {
+  const [rows, setRows] = useState([]);
+  const [loadingState, setLoadingState] = useState("loading");
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${SHEET_CSV_URL}&cacheBust=${Date.now()}`, {
+      signal: controller.signal,
+      cache: "no-store",
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Sheet responded ${response.status}`);
+        return response.text();
+      })
+      .then((csv) => {
+        setRows(parseCsv(csv));
+        setLoadingState("ready");
+      })
+      .catch((error) => {
+        if (error.name !== "AbortError") {
+          console.error(error);
+          setLoadingState("error");
+        }
+      });
+    return () => controller.abort();
+  }, []);
+
+  const data = useMemo(() => buildData(rows), [rows]);
+
+  return (
+    <div className="min-h-screen font-sans text-ink">
+      <Header data={data} />
+      <main>
+        <HeroSection data={data} />
+        <InfoBar data={data} />
+        {loadingState === "error" && (
+          <div className="mx-auto mt-6 max-w-7xl px-4 sm:px-6 lg:px-8">
+            <p className="rounded-2xl border border-gold/25 bg-white px-4 py-3 text-sm font-semibold text-muted">
+              ไม่สามารถดึงข้อมูลจาก Google Sheet ได้ในขณะนี้ หน้าเว็บจะแสดงข้อมูลสำรองไว้ก่อน
+            </p>
+          </div>
+        )}
+        <ObjectiveSection data={data} />
+        <ActivitySection data={data} />
+        <ScheduleTimeline data={data} />
+        <DonationSection data={data} />
+        <MeritSection data={data} />
+        <DonorTable data={data} />
+      </main>
+      <ContactFooter data={data} />
+      <MobileNav />
+    </div>
+  );
+}

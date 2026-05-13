@@ -2,3 +2,7 @@ cloudflare-pages/
 cloudflare-pages.zip
 server.err.log
 server.out.log
+node_modules/
+dist/
+.vite/
+.npm-cache/
