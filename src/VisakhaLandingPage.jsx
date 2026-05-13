@@ -21,6 +21,7 @@ import {
   Sparkles,
   Bell,
   CalendarCheck,
+  Copy,
   HandHeart,
   Megaphone,
   UserRound,
@@ -648,6 +649,17 @@ function ScheduleTimeline({ data }) {
 }
 
 function DonationSection({ data }) {
+  const [copied, setCopied] = useState(false);
+  const copyAccount = async () => {
+    try {
+      await navigator.clipboard.writeText(data.bankAccount);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      setCopied(false);
+    }
+  };
+
   return (
     <section id="donate" className="px-4 py-16 sm:px-6 lg:px-8" aria-labelledby="donate-title">
       <div className="mx-auto grid max-w-7xl gap-8 rounded-[2rem] border border-gold/35 bg-navy p-5 text-white shadow-soft sm:p-8 lg:grid-cols-[0.85fr_1.15fr] lg:p-10">
@@ -655,7 +667,11 @@ function DonationSection({ data }) {
           <p className="inline-flex rounded-full bg-gold px-4 py-2 text-sm font-black text-white">ร่วมทำบุญ</p>
           <h2 id="donate-title" className="mt-5 text-3xl font-black sm:text-4xl">{data.donationHeading}</h2>
           <p className="mt-3 text-lg font-semibold text-cream">{data.donationSubtitle}</p>
-          <p className="mt-6 leading-8 text-white/78">{data.slipNote}</p>
+          <ol className="mt-6 grid gap-3 text-sm font-semibold text-white/78">
+            <li className="flex gap-3"><span className="font-black text-gold">1</span><span>สแกน QR Code หรือโอนเข้าบัญชีวัด</span></li>
+            <li className="flex gap-3"><span className="font-black text-gold">2</span><span>กดคัดลอกเลขบัญชีได้ทันที</span></li>
+            <li className="flex gap-3"><span className="font-black text-gold">3</span><span>ส่งสลิปทาง Line OA เพื่อออกใบอนุโมทนาบัตร</span></li>
+          </ol>
           <a href={`https://line.me/R/ti/p/${encodeURIComponent(data.lineId)}`} className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 font-black text-white transition hover:-translate-y-0.5 hover:bg-[#b78324]">
             <MessageCircle size={20} aria-hidden="true" />
             ส่งสลิปทาง Line OA
@@ -684,7 +700,18 @@ function DonationSection({ data }) {
               </div>
               <div>
                 <dt className="text-sm text-white/60">เลขบัญชี</dt>
-                <dd className="font-mono text-3xl font-black tracking-wide text-gold">{data.bankAccount}</dd>
+                <dd className="mt-2 flex flex-wrap items-center gap-3">
+                  <span className="font-mono text-3xl font-black tracking-wide text-gold">{data.bankAccount}</span>
+                  <button
+                    type="button"
+                    onClick={copyAccount}
+                    className="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold px-4 text-sm font-black text-white transition hover:bg-[#b78324]"
+                    aria-label="คัดลอกเลขบัญชี"
+                  >
+                    <Copy size={16} aria-hidden="true" />
+                    {copied ? "คัดลอกแล้ว" : "คัดลอก"}
+                  </button>
+                </dd>
               </div>
               <div>
                 <dt className="text-sm text-white/60">ชื่อบัญชี</dt>
@@ -695,6 +722,9 @@ function DonationSection({ data }) {
                 <dd className="text-xl font-black text-cream">{data.lineId}</dd>
               </div>
             </dl>
+            <p className="mt-5 rounded-2xl bg-white/8 px-4 py-3 text-sm leading-7 text-white/70">
+              {data.slipNote}
+            </p>
           </div>
         </div>
       </div>
@@ -734,7 +764,7 @@ function DonorTable({ data }) {
           </div>
           <p className="text-sm text-muted">รายชื่ออัปเดตจาก Google Sheet</p>
         </div>
-        <div className="overflow-hidden rounded-2xl border border-gold/20 bg-white shadow-soft">
+        <div className="hidden overflow-hidden rounded-2xl border border-gold/20 bg-white shadow-soft md:block">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gold/15">
               <thead className="bg-ivory text-left text-sm font-black text-navy">
@@ -763,6 +793,26 @@ function DonorTable({ data }) {
               </tbody>
             </table>
           </div>
+        </div>
+        <div className="grid gap-3 md:hidden">
+          {data.donors.length ? (
+            data.donors.map((item, index) => (
+              <article key={`${item.order}-${item.name}-${index}-card`} className="rounded-2xl border border-gold/20 bg-white p-4 shadow-soft">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="text-xs font-bold text-muted">ลำดับ {item.order || index + 1}</p>
+                    <h3 className="mt-1 text-base font-black leading-7 text-navy">{item.type}</h3>
+                  </div>
+                  <span className="shrink-0 rounded-full bg-cream px-3 py-1 text-xs font-black text-gold">{item.amount}</span>
+                </div>
+                {item.name && <p className="mt-3 text-sm font-semibold leading-7 text-ink">{item.name}</p>}
+              </article>
+            ))
+          ) : (
+            <div className="rounded-2xl border border-gold/20 bg-white p-6 text-center text-muted shadow-soft">
+              ยังไม่มีรายชื่อในตารางทำบุญ
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -820,19 +870,31 @@ function MobileNav({ currentView, onNavigate }) {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-gold/20 bg-white/92 px-2 pb-[env(safe-area-inset-bottom)] pt-2 shadow-[0_-12px_35px_rgba(11,42,74,0.09)] backdrop-blur-xl" aria-label="เมนูล่าง">
       <div className="mx-auto grid max-w-xl grid-cols-5">
-        {items.map(([Icon, label, view]) => (
-          <button
-            key={view}
-            type="button"
-            onClick={() => onNavigate(view)}
-            className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl text-[11px] font-bold transition hover:bg-ivory sm:text-xs ${currentView === view ? "bg-ivory text-gold" : "text-navy"}`}
-            aria-label={label}
-            aria-current={currentView === view ? "page" : undefined}
-          >
-            <Icon size={20} aria-hidden="true" />
-            <span>{label}</span>
-          </button>
-        ))}
+        {items.map(([Icon, label, view]) => {
+          const isActive = currentView === view;
+          const isDonate = view === "donate";
+          return (
+            <button
+              key={view}
+              type="button"
+              onClick={() => onNavigate(view)}
+              className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl text-[11px] font-bold transition sm:text-xs ${
+                isDonate
+                  ? isActive
+                    ? "scale-105 bg-gold text-white shadow-soft"
+                    : "bg-navy text-gold shadow-soft hover:bg-navy/90"
+                  : isActive
+                    ? "bg-ivory text-gold"
+                    : "text-navy hover:bg-ivory"
+              }`}
+              aria-label={label}
+              aria-current={isActive ? "page" : undefined}
+            >
+              <Icon size={20} aria-hidden="true" />
+              <span>{label}</span>
+            </button>
+          );
+        })}
       </div>
     </nav>
   );
