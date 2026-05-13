@@ -418,6 +418,26 @@
           "ติดต่อสอบถาม": "#contact-text",
         };
 
+        function resolveSettingSelector(key) {
+          if (settingsTargets[key]) return settingsTargets[key];
+          if (!key) return null;
+
+          if (key.includes("งานบุญประจำปี")) return "#page-eyebrow";
+          if (key.includes("ชื่อป้าย")) return "#festival-title";
+          if (key.includes("คำอธิบายป้าย")) return "#festival-lead";
+          if (key.includes("หัวข้อรายละเอียด")) return "#detail-label";
+          if (key.includes("ชื่อรายละเอียด")) return "#detail-title";
+          if (key.includes("ข้อความรายละเอียด")) return "#detail-text";
+          if (key.includes("หัวข้อการร่วมบุญ")) return "#donation-label";
+          if (key.includes("ชื่อการร่วมบุญ")) return "#donation-title";
+          if (key.includes("ข้อความการร่วมบุญ")) return "#donation-text";
+          if (key.includes("ป้ายตาราง")) return "#table-eyebrow";
+          if (key.includes("หัวข้อตาราง")) return "#donor-title";
+          if (key.includes("ติดต่อสอบถาม")) return "#contact-text";
+
+          return null;
+        }
+
         function looksLikeImageUrl(value) {
           return /^https?:\/\/.+\.(png|jpe?g|webp|gif|avif)(\?.*)?$/i.test(value || "");
         }
@@ -553,7 +573,7 @@
               coverLabel.textContent = value;
               return;
             }
-            const selector = settingsTargets[key];
+            const selector = resolveSettingSelector(key);
             const target = selector ? document.querySelector(selector) : null;
             if (target && value) {
               target.textContent = value;
@@ -561,12 +581,13 @@
           });
         }
 
-        async function loadPageData(forceRefresh = false) {
+        async function loadPageData(forceRefresh = true) {
           tableStatus.textContent = "กำลังโหลดข้อมูลจาก Google Sheet...";
           refreshButton.disabled = true;
 
           try {
-            const url = forceRefresh ? `${sheetCsvUrl}&cacheBust=${Date.now()}` : sheetCsvUrl;
+            const separator = sheetCsvUrl.includes("?") ? "&" : "?";
+            const url = forceRefresh ? `${sheetCsvUrl}${separator}cacheBust=${Date.now()}` : sheetCsvUrl;
             const response = await fetch(url, {
               cache: forceRefresh ? "no-store" : "default",
             });
