@@ -391,21 +391,6 @@ function HeroSection({ data, onNavigate }) {
             )}
           </div>
           <h1 className="mt-8 text-5xl font-black leading-tight text-navy sm:text-6xl xl:text-7xl">{data.siteTitle}</h1>
-          <p className="mt-4 text-xl font-semibold leading-8 text-ink">แอพเดียวครบทุกเรื่องบุญ</p>
-          <p className="text-lg leading-8 text-muted">ทำบุญ • ปฏิบัติธรรม • ติดตามกิจกรรม</p>
-          <div className="mt-8 grid gap-3">
-            {featureItems.slice(0, 2).map(([Icon, title, detail]) => (
-              <button key={title} type="button" onClick={() => onNavigate(title.includes("ทำบุญ") ? "donate" : "schedule")} className="mx-auto flex w-full max-w-sm items-center gap-4 rounded-[1.6rem] bg-white/82 p-4 text-left shadow-soft transition hover:-translate-y-1">
-                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-gold text-white">
-                  <Icon size={26} aria-hidden="true" />
-                </span>
-                <span>
-                  <span className="block text-lg font-black text-navy">{title}</span>
-                  <span className="text-sm font-semibold text-muted">{detail}</span>
-                </span>
-              </button>
-            ))}
-          </div>
         </div>
 
         <div className="hidden">
