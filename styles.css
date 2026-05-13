@@ -50,14 +50,14 @@ body {
 .temple-logo {
   display: grid;
   place-items: center;
-  width: clamp(86px, 12vw, 128px);
+  width: clamp(54px, 7vw, 82px);
   aspect-ratio: 1;
-  border: 3px solid rgba(200, 148, 47, 0.82);
+  border: 2px solid rgba(200, 148, 47, 0.78);
   border-radius: 999px;
   color: var(--primary-dark);
   background:
     radial-gradient(circle at 50% 34%, #fffdf7 0 28%, #fff0c4 29% 62%, #c8942f 63% 100%);
-  box-shadow: 0 16px 34px rgba(91, 48, 18, 0.18);
+  box-shadow: 0 10px 22px rgba(91, 48, 18, 0.14);
 }
 
 .temple-logo span {
@@ -68,7 +68,7 @@ body {
   border-radius: 999px;
   color: #fffaf0;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-size: clamp(1rem, 2vw, 1.55rem);
   font-weight: 900;
   line-height: 1;
 }

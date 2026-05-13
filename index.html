@@ -430,6 +430,7 @@
           image.src = imageUrl;
           image.alt = "โลโก้วัด";
           image.decoding = "async";
+          image.loading = "lazy";
           image.addEventListener("error", () => {
             templeLogo.replaceChildren();
             const fallback = document.createElement("span");
@@ -452,7 +453,7 @@
           image.className = "cover-image";
           image.src = imageUrl;
           image.alt = "รูปภาพหน้าปก";
-          image.loading = "eager";
+          image.loading = "lazy";
           image.decoding = "async";
           image.addEventListener("error", () => {
             image.remove();
@@ -560,13 +561,14 @@
           });
         }
 
-        async function loadPageData() {
+        async function loadPageData(forceRefresh = false) {
           tableStatus.textContent = "กำลังโหลดข้อมูลจาก Google Sheet...";
           refreshButton.disabled = true;
 
           try {
-            const response = await fetch(`${sheetCsvUrl}&cacheBust=${Date.now()}`, {
-              cache: "no-store",
+            const url = forceRefresh ? `${sheetCsvUrl}&cacheBust=${Date.now()}` : sheetCsvUrl;
+            const response = await fetch(url, {
+              cache: forceRefresh ? "no-store" : "default",
             });
             if (!response.ok) throw new Error(`Google Sheet ตอบกลับสถานะ ${response.status}`);
 
@@ -604,7 +606,7 @@
           }
         }
 
-        refreshButton.addEventListener("click", loadPageData);
+        refreshButton.addEventListener("click", () => loadPageData(true));
         loadPageData();
       })();
     </script>
