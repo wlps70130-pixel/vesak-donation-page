@@ -520,7 +520,7 @@ function ActivitySection({ data }) {
           <p className="max-w-xl text-sm leading-6 text-muted">ร่วมปฏิบัติบูชา ทำบุญ และสืบสานประเพณีวันสำคัญทางพระพุทธศาสนาอย่างสงบงาม</p>
         </div>
         <div className="mt-5 grid gap-3 md:grid-cols-3">
-          {data.activities.slice(0, 3).map((item, index) => (
+          {data.activities.map((item, index) => (
             <article key={`${item.title}-${index}`} className="group overflow-hidden rounded-2xl border border-gold/15 bg-white shadow-sm transition hover:-translate-y-1">
               <div className="h-36 bg-ivory sm:h-40">
                 {looksLikeImage(item.image) ? (
