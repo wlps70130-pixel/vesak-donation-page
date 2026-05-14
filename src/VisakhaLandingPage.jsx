@@ -327,7 +327,7 @@ function Header({ data, currentView, onNavigate }) {
         </button>
         <button
           type="button"
-          className="grid min-h-11 min-w-11 place-items-center rounded-full bg-white text-navy shadow-soft lg:hidden"
+          className="hidden min-h-11 min-w-11 place-items-center rounded-full bg-white text-navy shadow-soft"
           aria-label={open ? "ปิดเมนู" : "เปิดเมนู"}
           aria-expanded={open}
           onClick={() => setOpen((value) => !value)}
@@ -380,29 +380,13 @@ function HeroSection({ data, onNavigate }) {
           <p className="mx-auto mt-5 max-w-xl text-pretty text-base font-semibold leading-8 text-muted lg:mx-0">
             {data.heroText}
           </p>
-          <div className="mx-auto mt-7 flex max-w-md flex-col gap-3 sm:flex-row lg:mx-0">
-            <button
-              type="button"
-              onClick={() => onNavigate("donate")}
-              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full bg-navy px-7 font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#0f473a]"
-            >
-              ร่วมทำบุญ
-            </button>
-            <button
-              type="button"
-              onClick={() => onNavigate("schedule")}
-              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full border border-gold/25 bg-white/78 px-7 font-black text-navy shadow-sm transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-cream/70"
-            >
-              ดูกำหนดการ
-            </button>
-          </div>
         </div>
 
         <div className="app-panel overflow-hidden rounded-[2rem] p-4 sm:p-5">
-          <div className="grid gap-4 md:grid-cols-[1fr_0.86fr]">
-            <div className="relative min-h-[260px] overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-cream via-white to-softblue">
+          <div className="grid gap-4">
+            <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-cream via-white to-softblue">
               {data.coverImage ? (
-                <img src={data.coverImage} alt="ภาพปกงานวันวิสาขบูชา" className="absolute inset-0 h-full w-full object-cover" loading="eager" />
+                <img src={data.coverImage} alt="ภาพปกงานวันวิสาขบูชา" className="absolute inset-0 h-full w-full object-contain" loading="eager" />
               ) : (
                 <div className="absolute inset-0 grid place-items-center">
                   <div className="grid h-28 w-28 place-items-center rounded-full bg-white/70 text-gold shadow-glow">
@@ -410,54 +394,8 @@ function HeroSection({ data, onNavigate }) {
                   </div>
                 </div>
               )}
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/75 to-transparent p-5 text-white">
-                <p className="text-sm font-bold text-cream">{data.eventDate}</p>
-                <p className="mt-1 text-2xl font-black">{data.heroTitle.replace("ปฏิบัติธรรม ", "")}</p>
-              </div>
             </div>
 
-            <div className="grid content-between gap-4">
-              <div className="rounded-[1.5rem] bg-white/72 p-5 ring-1 ring-gold/15">
-                <p className="text-xs font-black uppercase tracking-[0.18em] text-gold">Event</p>
-                <dl className="mt-4 grid gap-4 text-sm">
-                  <div className="flex gap-3">
-                    <CalendarDays className="mt-1 shrink-0 text-gold" size={20} aria-hidden="true" />
-                    <div>
-                      <dt className="font-black text-navy">วันที่จัดงาน</dt>
-                      <dd className="mt-1 leading-6 text-muted">{data.eventDate}</dd>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <Clock3 className="mt-1 shrink-0 text-gold" size={20} aria-hidden="true" />
-                    <div>
-                      <dt className="font-black text-navy">เวลา</dt>
-                      <dd className="mt-1 leading-6 text-muted">{data.eventTime}</dd>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <MapPin className="mt-1 shrink-0 text-gold" size={20} aria-hidden="true" />
-                    <div>
-                      <dt className="font-black text-navy">สถานที่</dt>
-                      <dd className="mt-1 leading-6 text-muted">{data.eventPlace}</dd>
-                    </div>
-                  </div>
-                </dl>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                {quickActions.map(([Icon, label, view]) => (
-                  <button
-                    key={view}
-                    type="button"
-                    onClick={() => onNavigate(view)}
-                    className="focus-ring rounded-2xl border border-gold/15 bg-white/78 p-4 text-left font-black text-navy shadow-sm transition hover:-translate-y-0.5 hover:border-gold/35 hover:bg-white"
-                  >
-                    <Icon className="mb-3 text-gold" size={22} aria-hidden="true" />
-                    {label}
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -747,7 +685,7 @@ function DonorTable({ data }) {
               {data.donorHeading}
             </h2>
           </div>
-          <p className="text-sm text-muted">รายชื่ออัปเดตจาก Google Sheet</p>
+          <p className="text-sm text-muted">รายชื่ออัปเดตวันที่ล่าสุด</p>
         </div>
         <div className="app-panel hidden overflow-hidden rounded-[1.7rem] md:block">
           <div className="overflow-x-auto">
@@ -945,7 +883,6 @@ function PageView({ currentView, data, loadingState, onNavigate }) {
   return (
     <>
       <HeroSection data={data} onNavigate={onNavigate} />
-      <InfoBar data={data} />
       <DataStateBanner loadingState={loadingState} />
       <DonorTable data={data} />
     </>
