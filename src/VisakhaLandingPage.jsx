@@ -293,7 +293,7 @@ function Header({ data, currentView, onNavigate }) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-navy/10 bg-white/78 shadow-[0_12px_34px_rgba(15,102,87,0.07)] backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-gold/15 bg-white/82 shadow-[0_12px_34px_rgba(36,70,63,0.06)] backdrop-blur-xl">
       <nav className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8" aria-label="เมนูหลัก">
         <button type="button" onClick={() => onNavigate("home")} className="flex min-w-0 items-center gap-3 text-left" aria-label="กลับไปหน้าหลัก">
           <div className="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full border border-gold/50 bg-white shadow-soft">
@@ -371,7 +371,7 @@ function HeroSection({ data, onNavigate }) {
       <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_50%_0%,rgba(201,150,45,0.16),transparent_36rem)]" aria-hidden="true" />
       <div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[0.92fr_1.08fr]">
         <div className="text-center lg:text-left">
-          <p className="mx-auto inline-flex rounded-full border border-navy/15 bg-softblue px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-navy shadow-sm lg:mx-0">
+          <p className="mx-auto inline-flex rounded-full border border-gold/25 bg-white/82 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-gold shadow-sm lg:mx-0">
             Visakha 2569
           </p>
           <h1 className="mx-auto mt-6 max-w-3xl text-balance text-5xl font-black leading-tight text-navy sm:text-6xl lg:mx-0 lg:text-7xl">
@@ -384,7 +384,7 @@ function HeroSection({ data, onNavigate }) {
 
         <div className="app-panel overflow-hidden rounded-[2rem] p-4 sm:p-5">
           <div className="grid gap-4">
-            <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-softblue via-white to-cream ring-1 ring-navy/10">
+            <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-ivory via-white to-cream ring-1 ring-gold/20">
               {data.coverImage ? (
                 <img src={data.coverImage} alt="ภาพปกงานวันวิสาขบูชา" className="absolute inset-0 h-full w-full object-contain" loading="eager" />
               ) : (
@@ -486,7 +486,7 @@ function InfoBar({ data }) {
 function ObjectiveSection({ data }) {
   return (
     <section id="objectives" className="relative overflow-hidden px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-      <div className="absolute inset-0 -z-10 bg-softblue/60 circuit-pattern opacity-80" aria-hidden="true" />
+      <div className="absolute inset-0 -z-10 bg-ivory circuit-pattern opacity-75" aria-hidden="true" />
       <div className="mx-auto max-w-7xl">
         <div className="max-w-3xl">
           <h2 className="text-3xl font-black leading-tight text-navy sm:text-4xl">{data.objectiveTitle}</h2>
@@ -495,7 +495,7 @@ function ObjectiveSection({ data }) {
         </div>
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           {data.objectives.map((item) => (
-            <article key={item.title} className="glass-card rounded-2xl border border-navy/10 p-6 shadow-soft transition hover:-translate-y-1 hover:border-navy/25">
+            <article key={item.title} className="glass-card rounded-2xl border border-gold/20 p-6 shadow-soft transition hover:-translate-y-1 hover:border-gold/35">
               <IconBadge icon={item.icon} />
               <h3 className="mt-5 text-xl font-black text-navy">{item.title}</h3>
               <p className="mt-3 text-base leading-8 text-muted">{item.detail}</p>
@@ -519,7 +519,7 @@ function ActivitySection({ data }) {
         </div>
         <div className="mt-5 grid gap-3 md:grid-cols-3">
           {data.activities.map((item, index) => (
-            <article key={`${item.title}-${index}`} className="group overflow-hidden rounded-2xl border border-navy/10 bg-white shadow-sm transition hover:-translate-y-1">
+            <article key={`${item.title}-${index}`} className="group overflow-hidden rounded-2xl border border-gold/20 bg-white shadow-sm transition hover:-translate-y-1">
               <div className="h-36 bg-ivory sm:h-40">
                 {looksLikeImage(item.image) ? (
                   <img src={item.image} alt={`รูปกิจกรรม${item.title}`} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
@@ -553,8 +553,8 @@ function ScheduleTimeline({ data }) {
         </div>
         <div className="space-y-2">
           {data.schedule.map(([time, detail], index) => (
-            <div key={`${time}-${index}`} className="grid gap-2 rounded-2xl border border-navy/10 bg-white/82 p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-navy/25 sm:grid-cols-[112px_1fr] sm:items-center">
-              <time className="inline-flex min-h-9 items-center gap-2 rounded-full bg-softblue px-3 text-sm font-black text-navy">
+            <div key={`${time}-${index}`} className="grid gap-2 rounded-2xl border border-gold/15 bg-white/82 p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-gold/30 sm:grid-cols-[112px_1fr] sm:items-center">
+              <time className="inline-flex min-h-9 items-center gap-2 rounded-full bg-cream/70 px-3 text-sm font-black text-gold">
                 <Clock3 size={15} aria-hidden="true" />
                 {time}
               </time>
@@ -801,7 +801,7 @@ function MobileNav({ currentView, onNavigate }) {
     [Phone, "ติดต่อเรา", "contact"],
   ];
   return (
-    <nav className="fixed bottom-3 left-3 right-3 z-40 rounded-[1.6rem] border border-navy/10 bg-white/88 px-2 py-2 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] shadow-[0_18px_45px_rgba(15,102,87,0.14)] backdrop-blur-xl" aria-label="เมนูล่าง">
+    <nav className="fixed bottom-3 left-3 right-3 z-40 rounded-[1.6rem] border border-gold/20 bg-white/88 px-2 py-2 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] shadow-[0_18px_45px_rgba(36,70,63,0.12)] backdrop-blur-xl" aria-label="เมนูล่าง">
       <div className="mx-auto grid max-w-xl grid-cols-5 gap-1">
         {items.map(([Icon, label, view]) => {
           const isActive = currentView === view;

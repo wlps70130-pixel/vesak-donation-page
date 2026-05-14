@@ -4,12 +4,12 @@
 
 :root {
   color-scheme: light;
-  --page-bg: #f8fbf7;
-  --panel-bg: rgba(255, 255, 255, 0.78);
-  --panel-border: rgba(15, 102, 87, 0.12);
-  --panel-shadow: 0 18px 48px rgba(15, 102, 87, 0.09);
-  --text-soft: #667a72;
-  background: #f8fbf7;
+  --page-bg: #fffdf7;
+  --panel-bg: rgba(255, 255, 255, 0.84);
+  --panel-border: rgba(200, 155, 60, 0.18);
+  --panel-shadow: 0 18px 48px rgba(36, 70, 63, 0.08);
+  --text-soft: #6d746f;
+  background: #fffdf7;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -26,9 +26,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 10% 0%, rgba(221, 240, 232, 0.9), transparent 310px),
-    radial-gradient(circle at 90% 8%, rgba(184, 148, 61, 0.13), transparent 330px),
-    linear-gradient(180deg, #fbfdf9 0%, #f8fbf7 46%, #ffffff 100%);
+    radial-gradient(circle at 12% 0%, rgba(244, 232, 206, 0.56), transparent 320px),
+    radial-gradient(circle at 88% 8%, rgba(238, 246, 244, 0.95), transparent 360px),
+    linear-gradient(180deg, #fffdf7 0%, #faf8ef 46%, #ffffff 100%);
 }
 
 button,
@@ -38,18 +38,18 @@ a {
 
 .thai-pattern {
   background-image:
-    linear-gradient(135deg, rgba(184, 148, 61, 0.06) 25%, transparent 25%),
-    linear-gradient(225deg, rgba(184, 148, 61, 0.06) 25%, transparent 25%),
-    linear-gradient(45deg, rgba(15, 102, 87, 0.03) 25%, transparent 25%),
-    linear-gradient(315deg, rgba(15, 102, 87, 0.03) 25%, #f8fbf7 25%);
+    linear-gradient(135deg, rgba(200, 155, 60, 0.06) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(200, 155, 60, 0.06) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(36, 70, 63, 0.025) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(36, 70, 63, 0.025) 25%, #fffdf7 25%);
   background-position: 14px 0, 14px 0, 0 0, 0 0;
   background-size: 28px 28px;
 }
 
 .circuit-pattern {
   background-image:
-    linear-gradient(90deg, rgba(15, 102, 87, 0.045) 1px, transparent 1px),
-    linear-gradient(rgba(15, 102, 87, 0.035) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(36, 70, 63, 0.035) 1px, transparent 1px),
+    linear-gradient(rgba(36, 70, 63, 0.025) 1px, transparent 1px);
   background-size: 42px 42px;
 }
 
@@ -67,10 +67,10 @@ a {
 }
 
 .phone-shell {
-  border: 9px solid #0f6657;
+  border: 9px solid #24463f;
   border-radius: 42px;
   box-shadow:
-    0 28px 70px rgba(15, 102, 87, 0.18),
+    0 28px 70px rgba(36, 70, 63, 0.16),
     inset 0 0 0 1px rgba(255, 255, 255, 0.45);
 }
 
@@ -87,15 +87,15 @@ a {
 .app-glow {
   background:
     radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.92), transparent 18%),
-    radial-gradient(circle at 50% 38%, rgba(184, 148, 61, 0.2), transparent 34%),
-    linear-gradient(180deg, #f8fbf7, #eef6ea 55%, #ffffff);
+    radial-gradient(circle at 50% 38%, rgba(200, 155, 60, 0.18), transparent 34%),
+    linear-gradient(180deg, #fffdf7, #f4e8ce 55%, #ffffff);
 }
 
 .app-bg {
   background:
-    radial-gradient(circle at 18% -4%, rgba(214, 239, 229, 0.92), transparent 32rem),
-    radial-gradient(circle at 90% 6%, rgba(184, 148, 61, 0.14), transparent 28rem),
-    linear-gradient(180deg, #fbfdf9 0%, var(--page-bg) 48%, #ffffff 100%);
+    radial-gradient(circle at 18% -4%, rgba(244, 232, 206, 0.62), transparent 31rem),
+    radial-gradient(circle at 92% 5%, rgba(238, 246, 244, 0.92), transparent 30rem),
+    linear-gradient(180deg, #fffdf7 0%, var(--page-bg) 48%, #ffffff 100%);
 }
 
 .app-panel {
@@ -107,7 +107,7 @@ a {
 
 .luxury-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(184, 148, 61, 0.42), transparent);
+  background: linear-gradient(90deg, transparent, rgba(200, 155, 60, 0.42), transparent);
 }
 
 .focus-ring {
@@ -116,7 +116,7 @@ a {
 }
 
 .focus-ring:focus-visible {
-  outline-color: rgba(184, 148, 61, 0.88);
+  outline-color: rgba(200, 155, 60, 0.88);
 }
 
 .skeleton-line {
@@ -137,33 +137,5 @@ a {
 @keyframes shimmer {
   100% {
     transform: translateX(100%);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --page-bg: #123f35;
-    --panel-bg: rgba(22, 78, 65, 0.78);
-    --panel-border: rgba(184, 148, 61, 0.24);
-    --panel-shadow: 0 22px 60px rgba(13, 61, 49, 0.24);
-    --text-soft: #d8e7df;
-  }
-
-  body {
-    color: #f8fafc;
-    background: #123f35;
-  }
-
-  .app-bg {
-    background:
-      radial-gradient(circle at 20% 0%, rgba(44, 111, 91, 0.46), transparent 32rem),
-      radial-gradient(circle at 88% 10%, rgba(184, 148, 61, 0.15), transparent 28rem),
-      linear-gradient(180deg, #123f35 0%, #164e41 54%, #123f35 100%);
-  }
-
-  .app-panel,
-  .glass-card {
-    color: #f8fafc;
   }
 }
