@@ -359,43 +359,42 @@ function Header({ data, currentView, onNavigate }) {
 }
 
 function HeroSection({ data, onNavigate }) {
-  const quickActions = [
-    [Heart, "ร่วมทำบุญ", "donate"],
-    [CalendarDays, "กำหนดการ", "schedule"],
-    [Sparkles, "วัตถุประสงค์", "objectives"],
-    [Phone, "ติดต่อวัด", "contact"],
-  ];
-
   return (
-    <section id="home" className="relative overflow-hidden px-4 pb-10 pt-8 sm:px-6 lg:px-8 lg:pb-14 lg:pt-12">
+    <section id="home" className="relative min-h-[calc(100vh-88px)] overflow-hidden px-4 py-8 lg:px-10 lg:py-16 xl:px-20">
       <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_50%_0%,rgba(201,150,45,0.16),transparent_36rem)]" aria-hidden="true" />
-      <div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[0.92fr_1.08fr]">
-        <div className="text-center lg:text-left">
-          <p className="mx-auto inline-flex rounded-full border border-gold/25 bg-white/82 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-gold shadow-sm lg:mx-0">
-            Visakha 2569
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="order-2 text-center lg:order-1 lg:text-left">
+          <p className="mx-auto inline-flex rounded-full border border-gold/25 bg-white px-5 py-2 text-sm font-black uppercase tracking-[0.25em] text-gold shadow-sm lg:mx-0">
+            VISAKHA 2569
           </p>
-          <h1 className="mx-auto mt-6 max-w-3xl text-balance text-5xl font-black leading-tight text-navy sm:text-6xl lg:mx-0 lg:text-7xl">
+          <h1 className="mx-auto mt-8 max-w-3xl text-balance text-5xl font-black leading-tight text-navy md:text-6xl lg:mx-0 lg:text-7xl">
             {data.siteTitle}
           </h1>
-          <p className="mx-auto mt-5 max-w-xl text-pretty text-base font-semibold leading-8 text-muted lg:mx-0">
+          <p className="mx-auto mt-6 max-w-xl text-pretty text-lg font-semibold leading-9 text-muted lg:mx-0">
             {data.heroText}
           </p>
+          <div className="mt-8 flex justify-center lg:justify-start">
+            <button
+              type="button"
+              onClick={() => onNavigate("donate")}
+              className="rounded-full bg-gold px-8 py-4 font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-[#b88524]"
+            >
+              ร่วมทำบุญ
+            </button>
+          </div>
         </div>
 
-        <div className="app-panel overflow-hidden rounded-[2rem] p-4 sm:p-5">
-          <div className="grid gap-4">
-            <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-ivory via-white to-cream ring-1 ring-gold/20">
+        <div className="order-1 lg:order-2">
+          <div className="rounded-[2rem] border border-gold/20 bg-white p-3 shadow-xl">
+            <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-ivory via-white to-cream">
               {data.coverImage ? (
-                <img src={data.coverImage} alt="ภาพปกงานวันวิสาขบูชา" className="absolute inset-0 h-full w-full object-contain" loading="eager" />
+                <img src={data.coverImage} alt="ปฏิบัติธรรมวันวิสาขบูชา" className="absolute inset-0 h-full w-full object-contain" loading="eager" />
               ) : (
-                <div className="absolute inset-0 grid place-items-center">
-                  <div className="grid h-28 w-28 place-items-center rounded-full bg-white/70 text-gold shadow-glow">
-                    <Landmark size={58} strokeWidth={1.35} aria-hidden="true" />
-                  </div>
+                <div className="grid h-full place-items-center">
+                  <Landmark size={58} strokeWidth={1.35} className="text-gold" aria-hidden="true" />
                 </div>
               )}
             </div>
-
           </div>
         </div>
       </div>
