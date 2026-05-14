@@ -657,16 +657,21 @@ function DonationSection({ data }) {
 
 function MeritSection({ data }) {
   return (
-    <section className="px-4 py-14 sm:px-6 lg:px-8" aria-labelledby="merit-title">
-      <div className="mx-auto max-w-7xl">
-        <h2 id="merit-title" className="text-center text-3xl font-black text-navy sm:text-4xl">อานิสงส์แห่งการร่วมบุญ</h2>
-        <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {data.benefits.map(([title, icon]) => (
-            <div key={title} className="rounded-2xl border border-gold/15 bg-white p-5 text-center shadow-soft">
-              <IconBadge icon={icon} className="mx-auto" />
-              <p className="mt-4 font-black leading-7 text-ink">{title}</p>
-            </div>
-          ))}
+    <section className="px-4 py-4 sm:px-6 lg:px-8" aria-labelledby="merit-title">
+      <div className="mx-auto max-w-4xl rounded-2xl border border-gold/15 bg-white/55 p-3 shadow-soft">
+        <h2 id="merit-title" className="text-center text-base font-black text-navy">อานิสงส์แห่งการร่วมบุญ</h2>
+        <div className="mt-3 flex flex-wrap justify-center gap-2">
+          {data.benefits.map(([title, icon]) => {
+            const Icon = ICONS[icon] || Flower2;
+            return (
+              <div key={title} className="inline-flex min-h-9 items-center gap-2 rounded-full border border-gold/15 bg-ivory/80 px-3 py-1.5 text-xs font-bold text-ink sm:text-sm">
+                <span className="grid size-7 place-items-center rounded-full bg-softblue text-navy">
+                  <Icon size={14} aria-hidden="true" />
+                </span>
+                <span>{title}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -743,11 +748,11 @@ function DonorTable({ data }) {
 }
 
 function ContactFooter({ data }) {
+  const contactLocation = "วัดหลวงพ่อสดธรรมกายาราม ตำบลแพงพวย อำเภอดำเนินสะดวก จังหวัดราชบุรี";
   const contacts = [
-    [Phone, data.contactPhone],
-    [MessageCircle, data.lineId],
-    [Home, data.facebook],
-    [Sparkles, data.tiktok],
+    { Icon: Phone, label: data.contactPhone, href: `tel:${data.contactPhone.replace(/[^0-9+]/g, "")}` },
+    { Icon: MessageCircle, label: `Line OA :${data.lineId}`, href: `https://line.me/R/ti/p/${encodeURIComponent(data.lineId)}` },
+    { brand: "facebook", label: `facebook:${data.facebook}`, href: `https://www.facebook.com/search/top?q=${encodeURIComponent(data.facebook)}` },
   ];
   return (
     <footer id="contact" className="bg-transparent px-4 pb-28 pt-10 sm:px-6 lg:px-8 lg:pb-12">
@@ -757,16 +762,19 @@ function ContactFooter({ data }) {
             <IconBadge icon="home" />
             <div>
               <h2 className="text-2xl font-black text-navy">ติดต่อสอบถาม</h2>
-              <p className="mt-2 leading-8 text-muted">{data.location}</p>
-              <p className="mt-2 font-bold text-gold">{data.mapLabel}</p>
+              <p className="mt-2 leading-8 text-muted">{contactLocation}</p>
             </div>
           </div>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            {contacts.map(([Icon, text], index) => (
-              <div key={`${text}-${index}`} className="flex min-h-12 items-center gap-3 rounded-2xl bg-white px-4 py-3 font-bold text-ink">
-                <Icon size={20} className="text-gold" aria-hidden="true" />
-                <span>{text}</span>
-              </div>
+            {contacts.map(({ Icon, brand, label, href }) => (
+              <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined} className="focus-ring flex min-h-12 items-center gap-3 rounded-2xl bg-white px-4 py-3 font-bold text-ink transition hover:-translate-y-0.5 hover:bg-cream/60">
+                {brand === "facebook" ? (
+                  <span className="grid size-5 place-items-center rounded-full bg-gold text-sm font-black leading-none text-white" aria-hidden="true">f</span>
+                ) : (
+                  <Icon size={20} className="text-gold" aria-hidden="true" />
+                )}
+                <span>{label}</span>
+              </a>
             ))}
           </div>
         </div>
