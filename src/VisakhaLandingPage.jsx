@@ -293,7 +293,7 @@ function Header({ data, currentView, onNavigate }) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-gold/10 bg-white/72 shadow-[0_12px_35px_rgba(11,42,74,0.05)] backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-navy/10 bg-white/78 shadow-[0_12px_34px_rgba(15,102,87,0.07)] backdrop-blur-xl">
       <nav className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8" aria-label="เมนูหลัก">
         <button type="button" onClick={() => onNavigate("home")} className="flex min-w-0 items-center gap-3 text-left" aria-label="กลับไปหน้าหลัก">
           <div className="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full border border-gold/50 bg-white shadow-soft">
@@ -322,7 +322,7 @@ function Header({ data, currentView, onNavigate }) {
           ))}
         </div>
 
-        <button type="button" onClick={() => onNavigate("donate")} className="hidden min-h-11 items-center rounded-full bg-gold px-5 py-2.5 text-sm font-bold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#b78324] lg:inline-flex">
+        <button type="button" onClick={() => onNavigate("donate")} className="hidden min-h-11 items-center rounded-full bg-gold px-5 py-2.5 text-sm font-bold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#9f7f32] lg:inline-flex">
           ร่วมทำบุญ
         </button>
         <button
@@ -405,7 +405,7 @@ function HeroSection({ data, onNavigate }) {
 
 function MiniSchedulePhone({ data }) {
   return (
-    <aside className="mx-auto w-full max-w-[320px] rounded-[2.2rem] border-[7px] border-[#101318] bg-ivory p-4 shadow-soft">
+    <aside className="mx-auto w-full max-w-[320px] rounded-[2.2rem] border-[7px] border-navy bg-ivory p-4 shadow-soft">
       <div className="phone-status">
         <span>9:41</span>
         <span>●● ▰</span>
@@ -430,7 +430,7 @@ function MiniSchedulePhone({ data }) {
 
 function MiniDonationPhone({ data, onNavigate }) {
   return (
-    <aside className="mx-auto w-full max-w-[320px] rounded-[2.2rem] border-[7px] border-[#101318] bg-navy p-4 text-white shadow-soft">
+    <aside className="mx-auto w-full max-w-[320px] rounded-[2.2rem] border-[7px] border-navy bg-navy p-4 text-white shadow-soft">
       <div className="phone-status text-white">
         <span>9:41</span>
         <span>●● ▰</span>
@@ -592,7 +592,7 @@ function DonationSection({ data }) {
             <li className="flex gap-3"><span className="font-black text-gold">2</span><span>กดคัดลอกเลขบัญชีได้ทันที</span></li>
             <li className="flex gap-3"><span className="font-black text-gold">3</span><span>ส่งสลิปทาง Line OA เพื่อออกใบอนุโมทนาบัตร</span></li>
           </ol>
-          <a href={`https://line.me/R/ti/p/${encodeURIComponent(data.lineId)}`} className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 font-black text-white transition hover:-translate-y-0.5 hover:bg-[#b78324]">
+          <a href={`https://line.me/R/ti/p/${encodeURIComponent(data.lineId)}`} className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 font-black text-white transition hover:-translate-y-0.5 hover:bg-[#9f7f32]">
             <MessageCircle size={20} aria-hidden="true" />
             ส่งสลิปทาง Line OA
           </a>
@@ -625,7 +625,7 @@ function DonationSection({ data }) {
                   <button
                     type="button"
                     onClick={copyAccount}
-                    className="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold px-4 text-sm font-black text-white transition hover:bg-[#b78324]"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold px-4 text-sm font-black text-white transition hover:bg-[#9f7f32]"
                     aria-label="คัดลอกเลขบัญชี"
                   >
                     <Copy size={16} aria-hidden="true" />
@@ -801,7 +801,7 @@ function MobileNav({ currentView, onNavigate }) {
     [Phone, "ติดต่อเรา", "contact"],
   ];
   return (
-    <nav className="fixed bottom-3 left-3 right-3 z-40 rounded-[1.6rem] border border-gold/20 bg-white/86 px-2 py-2 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] shadow-[0_18px_45px_rgba(11,42,74,0.16)] backdrop-blur-xl" aria-label="เมนูล่าง">
+    <nav className="fixed bottom-3 left-3 right-3 z-40 rounded-[1.6rem] border border-navy/10 bg-white/88 px-2 py-2 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] shadow-[0_18px_45px_rgba(15,102,87,0.14)] backdrop-blur-xl" aria-label="เมนูล่าง">
       <div className="mx-auto grid max-w-xl grid-cols-5 gap-1">
         {items.map(([Icon, label, view]) => {
           const isActive = currentView === view;
