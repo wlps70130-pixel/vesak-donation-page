@@ -359,122 +359,106 @@ function Header({ data, currentView, onNavigate }) {
 }
 
 function HeroSection({ data, onNavigate }) {
-  const serviceItems = [
-    [HandHeart, "ร่วมทำบุญ"],
-    [CalendarCheck, "กำหนดการ"],
-    [Flower2, "กิจกรรม"],
-    [BookOpen, "ธรรมะ"],
-    [Megaphone, "ข่าวสาร"],
-    [RadioTower, "ถ่ายทอดสด"],
-    [MapPin, "แผนที่วัด"],
-    [Phone, "ติดต่อเรา"],
-  ];
-  const featureItems = [
-    [Flower2, "ร่วมทำบุญออนไลน์", "สะดวก ปลอดภัย ได้บุญ"],
-    [CalendarDays, "กำหนดการ & กิจกรรม", "ไม่พลาดทุกกิจกรรมสำคัญ"],
-    [BookOpen, "ธรรมะใกล้ตัว", "บทความ และสื่อธรรมะ"],
-    [Bell, "แจ้งเตือนกิจกรรม", "แจ้งเตือนข่าวสารและกิจกรรม"],
-    [UserRound, "บัญชีผู้ใช้", "จัดการข้อมูลส่วนตัว"],
+  const quickActions = [
+    [Heart, "ร่วมทำบุญ", "donate"],
+    [CalendarDays, "กำหนดการ", "schedule"],
+    [Sparkles, "วัตถุประสงค์", "objectives"],
+    [Phone, "ติดต่อวัด", "contact"],
   ];
 
   return (
-    <section id="home" className="relative overflow-hidden px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pb-20 lg:pt-14">
-      <div className="absolute inset-0 -z-10 app-glow" aria-hidden="true" />
-      <div className="absolute bottom-0 left-0 right-0 -z-10 h-72 bg-gold/10 temple-silhouette" aria-hidden="true" />
-      <div className="mx-auto grid max-w-3xl items-center gap-8">
-        <div className="text-center xl:text-left">
-          <div className="mx-auto grid h-28 w-28 place-items-center overflow-hidden rounded-[1.7rem] border-2 border-gold bg-navy shadow-glow">
-            {looksLikeImage(data.logoImage) ? (
-              <img src={data.logoImage} alt="โลโก้วัด" className="h-full w-full object-contain bg-white p-2" />
-            ) : (
-              <Landmark className="text-gold" size={62} strokeWidth={1.3} aria-hidden="true" />
-            )}
-          </div>
-          <h1 className="mt-8 text-5xl font-black leading-tight text-navy sm:text-6xl xl:text-7xl">{data.siteTitle}</h1>
-          <div className="mx-auto mt-8 flex max-w-sm flex-col gap-3 sm:flex-row sm:justify-center">
+    <section id="home" className="relative overflow-hidden px-4 pb-10 pt-8 sm:px-6 lg:px-8 lg:pb-14 lg:pt-12">
+      <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_50%_0%,rgba(201,150,45,0.16),transparent_36rem)]" aria-hidden="true" />
+      <div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[0.92fr_1.08fr]">
+        <div className="text-center lg:text-left">
+          <p className="mx-auto inline-flex rounded-full border border-gold/20 bg-white/76 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-gold shadow-sm lg:mx-0">
+            Visakha 2569
+          </p>
+          <h1 className="mx-auto mt-6 max-w-3xl text-balance text-5xl font-black leading-tight text-navy sm:text-6xl lg:mx-0 lg:text-7xl">
+            {data.siteTitle}
+          </h1>
+          <p className="mx-auto mt-5 max-w-xl text-pretty text-base font-semibold leading-8 text-muted lg:mx-0">
+            {data.heroText}
+          </p>
+          <div className="mx-auto mt-7 flex max-w-md flex-col gap-3 sm:flex-row lg:mx-0">
             <button
               type="button"
               onClick={() => onNavigate("donate")}
-              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full bg-navy px-6 font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#12395e]"
+              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full bg-navy px-7 font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#12395e]"
             >
               ร่วมทำบุญ
             </button>
             <button
               type="button"
               onClick={() => onNavigate("schedule")}
-              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full border border-gold/25 bg-white/78 px-6 font-black text-navy shadow-sm transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-cream/70"
+              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full border border-gold/25 bg-white/78 px-7 font-black text-navy shadow-sm transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-cream/70"
             >
               ดูกำหนดการ
             </button>
           </div>
         </div>
 
-        <div className="hidden">
-          <div className="phone-shell overflow-hidden bg-ivory">
-            <div className="phone-status px-5 pt-2">
-              <span>9:41</span>
-              <span>●●● ▰</span>
-            </div>
-            <div className="relative overflow-hidden px-4 pb-4">
-              <div className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full bg-white/70 text-gold shadow-sm">
-                <Bell size={21} aria-hidden="true" />
-                <span className="absolute -right-0.5 -top-0.5 grid h-5 w-5 place-items-center rounded-full bg-red-500 text-[10px] font-black text-white">3</span>
-              </div>
-              <div className="px-2 pb-2 pt-5 text-center">
-                <h2 className="text-4xl font-black text-navy">วิสาขะธรรม</h2>
-                <p className="mt-1 text-sm font-semibold text-muted">ทำบุญอย่างมีสติ ชีวิตงดงามด้วยธรรม</p>
-              </div>
-              <div className="relative mt-4 aspect-[4/3] overflow-hidden rounded-[1.9rem] bg-gradient-to-br from-white via-cream to-softblue shadow-soft">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_32%,rgba(255,255,255,.95),transparent_18%),radial-gradient(circle_at_50%_35%,rgba(201,150,45,.28),transparent_38%)]" aria-hidden="true" />
+        <div className="app-panel overflow-hidden rounded-[2rem] p-4 sm:p-5">
+          <div className="grid gap-4 md:grid-cols-[1fr_0.86fr]">
+            <div className="relative min-h-[260px] overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-cream via-white to-softblue">
               {data.coverImage ? (
-                  <img src={data.coverImage} alt="ภาพปกงานวันวิสาขบูชา" className="relative h-full w-full object-cover" loading="eager" />
+                <img src={data.coverImage} alt="ภาพปกงานวันวิสาขบูชา" className="absolute inset-0 h-full w-full object-cover" loading="eager" />
               ) : (
-                  <div className="relative grid h-full place-items-center px-8 text-center">
-                  <div>
-                      <div className="mx-auto mb-5 grid h-32 w-32 place-items-center rounded-full bg-gold/15 shadow-glow">
-                        <Landmark className="text-gold" size={70} strokeWidth={1.4} aria-hidden="true" />
-                    </div>
-                      <p className="text-2xl font-black text-navy">พระพุทธรูปสีทอง</p>
+                <div className="absolute inset-0 grid place-items-center">
+                  <div className="grid h-28 w-28 place-items-center rounded-full bg-white/70 text-gold shadow-glow">
+                    <Landmark size={58} strokeWidth={1.35} aria-hidden="true" />
                   </div>
                 </div>
               )}
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/75 to-transparent p-5 text-white">
+                <p className="text-sm font-bold text-cream">{data.eventDate}</p>
+                <p className="mt-1 text-2xl font-black">{data.heroTitle.replace("ปฏิบัติธรรม ", "")}</p>
+              </div>
             </div>
-              <div className="-mt-8 rounded-[1.6rem] bg-navy p-5 text-center text-white shadow-soft ring-1 ring-gold/50">
-                <p className="mx-auto mb-2 w-fit rounded-full bg-gold px-4 py-1 text-xs font-black">เชิญร่วมงาน</p>
-                <h3 className="text-3xl font-black">{data.heroTitle.replace("ปฏิบัติธรรม ", "")}</h3>
-                <p className="mt-2 text-sm font-semibold leading-6 text-cream">{data.objectiveSubtitle}</p>
-              </div>
-              <div className="-mt-1 grid grid-cols-3 overflow-hidden rounded-[1.35rem] bg-white shadow-soft ring-1 ring-gold/20">
-                {[
-                  [CalendarDays, "31", "พ.ค. 2569"],
-                  [MapPin, "พระมหาเจดีย์", "วิสาขบูชา"],
-                  [Clock3, "09.00 น.", "เป็นต้นไป"],
-                ].map(([Icon, main, sub]) => (
-                  <div key={main} className="border-r border-gold/15 px-2 py-4 text-center last:border-r-0">
-                    <Icon className="mx-auto text-gold" size={24} aria-hidden="true" />
-                    <p className="mt-2 text-lg font-black text-navy">{main}</p>
-                    <p className="text-xs font-semibold text-muted">{sub}</p>
+
+            <div className="grid content-between gap-4">
+              <div className="rounded-[1.5rem] bg-white/72 p-5 ring-1 ring-gold/15">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-gold">Event</p>
+                <dl className="mt-4 grid gap-4 text-sm">
+                  <div className="flex gap-3">
+                    <CalendarDays className="mt-1 shrink-0 text-gold" size={20} aria-hidden="true" />
+                    <div>
+                      <dt className="font-black text-navy">วันที่จัดงาน</dt>
+                      <dd className="mt-1 leading-6 text-muted">{data.eventDate}</dd>
+                    </div>
                   </div>
-                ))}
+                  <div className="flex gap-3">
+                    <Clock3 className="mt-1 shrink-0 text-gold" size={20} aria-hidden="true" />
+                    <div>
+                      <dt className="font-black text-navy">เวลา</dt>
+                      <dd className="mt-1 leading-6 text-muted">{data.eventTime}</dd>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <MapPin className="mt-1 shrink-0 text-gold" size={20} aria-hidden="true" />
+                    <div>
+                      <dt className="font-black text-navy">สถานที่</dt>
+                      <dd className="mt-1 leading-6 text-muted">{data.eventPlace}</dd>
+                    </div>
+                  </div>
+                </dl>
               </div>
-              <div className="mt-5">
-                <p className="mb-3 text-sm font-black text-navy">บริการหลัก</p>
-                <div className="grid grid-cols-4 gap-3">
-                  {serviceItems.map(([Icon, label]) => (
-                    <button key={label} type="button" onClick={() => onNavigate(label.includes("ร่วม") ? "donate" : "schedule")} className="grid min-h-20 place-items-center rounded-2xl bg-white p-2 text-center text-[11px] font-black text-navy shadow-sm transition hover:-translate-y-0.5">
-                      <Icon className="text-gold" size={24} aria-hidden="true" />
-                      <span>{label}</span>
-                    </button>
-                  ))}
-                </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                {quickActions.map(([Icon, label, view]) => (
+                  <button
+                    key={view}
+                    type="button"
+                    onClick={() => onNavigate(view)}
+                    className="focus-ring rounded-2xl border border-gold/15 bg-white/78 p-4 text-left font-black text-navy shadow-sm transition hover:-translate-y-0.5 hover:border-gold/35 hover:bg-white"
+                  >
+                    <Icon className="mb-3 text-gold" size={22} aria-hidden="true" />
+                    {label}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="hidden">
-          <MiniSchedulePhone data={data} />
-          <MiniDonationPhone data={data} onNavigate={onNavigate} />
         </div>
       </div>
     </section>
