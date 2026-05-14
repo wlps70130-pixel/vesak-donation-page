@@ -304,8 +304,8 @@ function Header({ data, currentView, onNavigate }) {
             )}
           </div>
           <div className="min-w-0">
-            <p className="truncate text-lg font-bold leading-tight text-ink">{data.siteTitle}</p>
-            <p className="truncate text-xs font-semibold uppercase tracking-[0.18em] text-muted">{data.siteSubtitle}</p>
+            <p className="truncate text-base font-bold leading-tight text-ink sm:text-lg">วัดหลวงพ่อสดธรรมกายาราม</p>
+            <p className="truncate text-[11px] font-semibold tracking-[0.08em] text-muted sm:text-xs">Wat Luang Pho Sod Dhammakayaram</p>
           </div>
         </button>
 
@@ -489,8 +489,7 @@ function ObjectiveSection({ data }) {
       <div className="absolute inset-0 -z-10 bg-ivory circuit-pattern opacity-70" aria-hidden="true" />
       <div className="mx-auto max-w-7xl">
         <div className="max-w-3xl">
-          <p className="text-sm font-black uppercase tracking-[0.2em] text-gold">Merit Technology</p>
-          <h2 className="mt-3 text-3xl font-black leading-tight text-navy sm:text-4xl">{data.objectiveTitle}</h2>
+          <h2 className="text-3xl font-black leading-tight text-navy sm:text-4xl">{data.objectiveTitle}</h2>
           <p className="mt-4 text-lg font-bold text-ink">{data.objectiveSubtitle}</p>
           <p className="mt-4 text-base leading-8 text-muted">{data.objectiveIntro}</p>
         </div>
@@ -514,8 +513,7 @@ function ActivitySection({ data }) {
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col justify-between gap-2 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-gold">Activities</p>
-            <h2 id="activity-title" className="mt-2 text-2xl font-black text-navy sm:text-3xl">กิจกรรมภายในงาน</h2>
+            <h2 id="activity-title" className="text-2xl font-black text-navy sm:text-3xl">กิจกรรมภายในงาน</h2>
           </div>
           <p className="max-w-xl text-sm leading-6 text-muted">ร่วมปฏิบัติบูชา ทำบุญ และสืบสานประเพณีวันสำคัญทางพระพุทธศาสนาอย่างสงบงาม</p>
         </div>
@@ -550,7 +548,6 @@ function ScheduleTimeline({ data }) {
         <div className="mb-4 flex items-center gap-3">
           <IconBadge icon="book" className="h-10 w-10 rounded-xl" />
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-gold">Timeline</p>
             <h2 id="schedule-title" className="text-2xl font-black text-navy">กำหนดการ</h2>
           </div>
         </div>
