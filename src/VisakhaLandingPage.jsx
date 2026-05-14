@@ -391,6 +391,22 @@ function HeroSection({ data, onNavigate }) {
             )}
           </div>
           <h1 className="mt-8 text-5xl font-black leading-tight text-navy sm:text-6xl xl:text-7xl">{data.siteTitle}</h1>
+          <div className="mx-auto mt-8 flex max-w-sm flex-col gap-3 sm:flex-row sm:justify-center">
+            <button
+              type="button"
+              onClick={() => onNavigate("donate")}
+              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full bg-navy px-6 font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#12395e]"
+            >
+              ร่วมทำบุญ
+            </button>
+            <button
+              type="button"
+              onClick={() => onNavigate("schedule")}
+              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full border border-gold/25 bg-white/78 px-6 font-black text-navy shadow-sm transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-cream/70"
+            >
+              ดูกำหนดการ
+            </button>
+          </div>
         </div>
 
         <div className="hidden">
@@ -863,7 +879,7 @@ function MobileNav({ currentView, onNavigate }) {
               key={view}
               type="button"
               onClick={() => onNavigate(view)}
-              className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl text-[11px] font-bold transition sm:text-xs ${
+              className={`focus-ring flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl text-[11px] font-bold transition sm:text-xs ${
                 isDonate
                   ? isActive
                     ? "scale-105 bg-gold text-white shadow-soft"
@@ -883,6 +899,36 @@ function MobileNav({ currentView, onNavigate }) {
       </div>
     </nav>
   );
+}
+
+function DataStateBanner({ loadingState }) {
+  if (loadingState === "loading") {
+    return (
+      <div className="mx-auto mt-6 max-w-3xl px-4 sm:px-6 lg:px-8" role="status" aria-live="polite">
+        <div className="app-panel rounded-2xl p-4">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-full skeleton-line" />
+            <div className="min-w-0 flex-1 space-y-2">
+              <div className="h-3 w-1/2 rounded-full skeleton-line" />
+              <div className="h-3 w-3/4 rounded-full skeleton-line" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (loadingState === "error") {
+    return (
+      <div className="mx-auto mt-6 max-w-3xl px-4 sm:px-6 lg:px-8" role="alert">
+        <p className="app-panel rounded-2xl px-4 py-3 text-sm font-semibold text-muted">
+          ไม่สามารถดึงข้อมูลจาก Google Sheet ได้ในขณะนี้ หน้าเว็บจะแสดงข้อมูลสำรองไว้ก่อน
+        </p>
+      </div>
+    );
+  }
+
+  return null;
 }
 
 function PageView({ currentView, data, loadingState, onNavigate }) {
@@ -916,14 +962,8 @@ function PageView({ currentView, data, loadingState, onNavigate }) {
     <>
       <HeroSection data={data} onNavigate={onNavigate} />
       <InfoBar data={data} />
+      <DataStateBanner loadingState={loadingState} />
       <DonorTable data={data} />
-      {loadingState === "error" && (
-        <div className="mx-auto mt-6 max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="rounded-2xl border border-gold/25 bg-white px-4 py-3 text-sm font-semibold text-muted">
-            ไม่สามารถดึงข้อมูลจาก Google Sheet ได้ในขณะนี้ หน้าเว็บจะแสดงข้อมูลสำรองไว้ก่อน
-          </p>
-        </div>
-      )}
     </>
   );
 }
