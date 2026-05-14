@@ -510,30 +510,30 @@ function ObjectiveSection({ data }) {
 
 function ActivitySection({ data }) {
   return (
-    <section className="px-4 py-16 sm:px-6 lg:px-8" aria-labelledby="activity-title">
+    <section className="px-4 py-8 sm:px-6 lg:px-8" aria-labelledby="activity-title">
       <div className="mx-auto max-w-7xl">
-        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <div className="flex flex-col justify-between gap-2 md:flex-row md:items-end">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.2em] text-gold">Activities</p>
-            <h2 id="activity-title" className="mt-3 text-3xl font-black text-navy sm:text-4xl">กิจกรรมภายในงาน</h2>
+            <h2 id="activity-title" className="mt-2 text-2xl font-black text-navy sm:text-3xl">กิจกรรมภายในงาน</h2>
           </div>
-          <p className="max-w-xl text-base leading-7 text-muted">ร่วมปฏิบัติบูชา ทำบุญ และสืบสานประเพณีวันสำคัญทางพระพุทธศาสนาอย่างสงบงาม</p>
+          <p className="max-w-xl text-sm leading-6 text-muted">ร่วมปฏิบัติบูชา ทำบุญ และสืบสานประเพณีวันสำคัญทางพระพุทธศาสนาอย่างสงบงาม</p>
         </div>
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <div className="mt-5 grid gap-3 md:grid-cols-3">
           {data.activities.slice(0, 3).map((item, index) => (
-            <article key={`${item.title}-${index}`} className="group overflow-hidden rounded-2xl border border-gold/15 bg-white shadow-soft transition hover:-translate-y-1">
-              <div className="aspect-[4/3] bg-ivory">
+            <article key={`${item.title}-${index}`} className="group overflow-hidden rounded-2xl border border-gold/15 bg-white shadow-sm transition hover:-translate-y-1">
+              <div className="h-36 bg-ivory sm:h-40">
                 {looksLikeImage(item.image) ? (
                   <img src={item.image} alt={`รูปกิจกรรม${item.title}`} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
                 ) : (
                   <div className="grid h-full place-items-center bg-gradient-to-br from-softblue via-white to-cream">
-                    <IconBadge icon={index === 0 ? "flower" : index === 1 ? "heart" : "sparkles"} className="h-16 w-16" />
+                    <IconBadge icon={index === 0 ? "flower" : index === 1 ? "heart" : "sparkles"} className="h-12 w-12" />
                   </div>
                 )}
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-black text-navy">{item.title}</h3>
-                <p className="mt-2 leading-7 text-muted">{item.detail}</p>
+              <div className="p-4">
+                <h3 className="text-lg font-black text-navy">{item.title}</h3>
+                <p className="mt-1 text-sm leading-6 text-muted">{item.detail}</p>
               </div>
             </article>
           ))}
@@ -545,27 +545,27 @@ function ActivitySection({ data }) {
 
 function ScheduleTimeline({ data }) {
   return (
-    <section id="schedule" className="px-4 py-10 sm:px-6 lg:px-8" aria-labelledby="schedule-title">
-      <div className="app-panel mx-auto max-w-4xl rounded-[2rem] p-5 sm:p-8">
-        <div className="mb-8 flex items-center gap-4">
-          <IconBadge icon="book" />
+    <section id="schedule" className="px-4 py-6 sm:px-6 lg:px-8" aria-labelledby="schedule-title">
+      <div className="app-panel mx-auto max-w-3xl rounded-[1.6rem] p-4 sm:p-5">
+        <div className="mb-4 flex items-center gap-3">
+          <IconBadge icon="book" className="h-10 w-10 rounded-xl" />
           <div>
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-gold">Timeline</p>
-            <h2 id="schedule-title" className="text-3xl font-black text-navy">กำหนดการ</h2>
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-gold">Timeline</p>
+            <h2 id="schedule-title" className="text-2xl font-black text-navy">กำหนดการ</h2>
           </div>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-2">
           {data.schedule.map(([time, detail], index) => (
-            <div key={`${time}-${index}`} className="grid gap-3 rounded-[1.35rem] border border-gold/10 bg-white/76 p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-gold/30 sm:grid-cols-[120px_1fr] sm:items-center">
-              <time className="inline-flex min-h-11 items-center gap-2 rounded-full bg-cream/70 px-3 font-black text-gold">
-                <Clock3 size={17} aria-hidden="true" />
+            <div key={`${time}-${index}`} className="grid gap-2 rounded-2xl border border-gold/10 bg-white/76 p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-gold/30 sm:grid-cols-[112px_1fr] sm:items-center">
+              <time className="inline-flex min-h-9 items-center gap-2 rounded-full bg-cream/70 px-3 text-sm font-black text-gold">
+                <Clock3 size={15} aria-hidden="true" />
                 {time}
               </time>
-              <p className="text-base font-semibold leading-7 text-ink">{detail}</p>
+              <p className="text-sm font-semibold leading-6 text-ink sm:text-base">{detail}</p>
             </div>
           ))}
         </div>
-        <p className="mt-6 text-sm text-muted">กำหนดการอาจเปลี่ยนแปลงได้ตามความเหมาะสม</p>
+        <p className="mt-4 text-xs text-muted">กำหนดการอาจเปลี่ยนแปลงได้ตามความเหมาะสม</p>
       </div>
     </section>
   );
