@@ -293,7 +293,7 @@ function Header({ data, currentView, onNavigate }) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-gold/15 bg-white/82 shadow-[0_12px_34px_rgba(36,70,63,0.06)] backdrop-blur-xl">
+    <header className="sticky top-0 z-50 hidden border-b border-gold/15 bg-[#f8f4ea]/90 shadow-[0_12px_34px_rgba(36,70,63,0.06)] backdrop-blur lg:block">
       <nav className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8" aria-label="เมนูหลัก">
         <button type="button" onClick={() => onNavigate("home")} className="flex min-w-0 items-center gap-3 text-left" aria-label="กลับไปหน้าหลัก">
           <div className="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full border border-gold/50 bg-white shadow-soft">
@@ -801,7 +801,7 @@ function MobileNav({ currentView, onNavigate }) {
     [Phone, "ติดต่อเรา", "contact"],
   ];
   return (
-    <nav className="fixed bottom-3 left-3 right-3 z-40 rounded-[1.6rem] border border-gold/20 bg-white/88 px-2 py-2 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] shadow-[0_18px_45px_rgba(36,70,63,0.12)] backdrop-blur-xl" aria-label="เมนูล่าง">
+    <nav className="fixed bottom-4 left-4 right-4 z-50 rounded-3xl border border-gold/20 bg-white/95 px-2 py-2 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] shadow-lg backdrop-blur-xl lg:hidden" aria-label="เมนูล่าง">
       <div className="mx-auto grid max-w-xl grid-cols-5 gap-1">
         {items.map(([Icon, label, view]) => {
           const isActive = currentView === view;
@@ -945,7 +945,7 @@ export default function VisakhaLandingPage() {
   return (
     <div className="app-bg min-h-screen font-sans text-ink">
       <Header data={data} currentView={currentView} onNavigate={handleNavigate} />
-      <main className="pb-28">
+      <main className="pb-28 lg:pb-10">
         <PageView currentView={currentView} data={data} loadingState={loadingState} onNavigate={handleNavigate} />
       </main>
       <MobileNav currentView={currentView} onNavigate={handleNavigate} />
