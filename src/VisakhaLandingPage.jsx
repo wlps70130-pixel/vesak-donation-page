@@ -679,6 +679,11 @@ function MeritSection({ data }) {
 }
 
 function DonorTable({ data }) {
+  const donorUpdatedDate = new Intl.DateTimeFormat("th-TH", {
+    dateStyle: "long",
+    timeZone: "Asia/Bangkok",
+  }).format(new Date());
+
   return (
     <section className="px-4 py-10 sm:px-6 lg:px-8" aria-labelledby="donor-title">
       <div className="mx-auto max-w-7xl">
@@ -690,7 +695,7 @@ function DonorTable({ data }) {
               {data.donorHeading}
             </h2>
           </div>
-          <p className="text-sm text-muted">รายชื่ออัปเดตวันที่ล่าสุด</p>
+          <p className="text-sm text-muted">อัปเดตล่าสุด {donorUpdatedDate}</p>
         </div>
         <div className="app-panel hidden overflow-hidden rounded-[1.7rem] md:block">
           <div className="overflow-x-auto">
