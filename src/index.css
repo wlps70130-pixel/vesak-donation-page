@@ -135,6 +135,20 @@ a {
   clip-path: polygon(0 86%, 9% 74%, 16% 86%, 26% 58%, 34% 86%, 44% 66%, 51% 86%, 61% 44%, 72% 86%, 82% 69%, 91% 86%, 100% 77%, 100% 100%, 0 100%);
 }
 
+@media (max-width: 768px) {
+  .home-bg::before {
+    width: 260px;
+    height: 260px;
+    opacity: 0.22;
+  }
+
+  .home-bg::after {
+    width: 420px;
+    height: 180px;
+    opacity: 0.10;
+  }
+}
+
 .app-panel {
   background: var(--panel-bg);
   border: 1px solid var(--panel-border);
