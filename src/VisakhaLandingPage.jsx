@@ -384,7 +384,7 @@ function HeroSection({ data, onNavigate }) {
             <button
               type="button"
               onClick={() => onNavigate("donate")}
-              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full bg-navy px-7 font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#12395e]"
+              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full bg-navy px-7 font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#0f473a]"
             >
               ร่วมทำบุญ
             </button>
