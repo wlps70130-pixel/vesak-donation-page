@@ -360,10 +360,7 @@ function Header({ data, currentView, onNavigate }) {
 
 function HeroSection({ data, onNavigate }) {
   return (
-    <section id="home" className="relative min-h-screen overflow-hidden bg-[#fbf7ed] px-4 py-8 lg:px-10 lg:py-16 xl:px-20">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(218,165,55,0.14),transparent_32%),radial-gradient(circle_at_85%_20%,rgba(28,79,70,0.10),transparent_30%),linear-gradient(180deg,#fffaf0_0%,#f8f1df_100%)]" aria-hidden="true" />
-      <div className="hero-lotus pointer-events-none absolute bottom-8 left-0 h-[300px] w-[360px] bg-gold/20 opacity-35 blur-[0.2px]" aria-hidden="true" />
-      <div className="temple-silhouette pointer-events-none absolute bottom-0 left-1/2 h-[180px] w-[600px] max-w-[90vw] -translate-x-1/2 bg-navy/15 opacity-60" aria-hidden="true" />
+    <section id="home" className="home-bg px-4 py-8 lg:px-10 lg:py-16 xl:px-20">
       <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <div className="order-2 text-center lg:order-1 lg:text-left">
           <p className="mx-auto inline-flex rounded-full border border-gold/25 bg-white px-5 py-2 text-sm font-black uppercase tracking-[0.25em] text-gold shadow-sm lg:mx-0">

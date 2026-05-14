@@ -98,6 +98,43 @@ a {
     linear-gradient(180deg, #fffdf7 0%, var(--page-bg) 48%, #ffffff 100%);
 }
 
+.home-bg {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(218, 165, 55, 0.14), transparent 32%),
+    radial-gradient(circle at 85% 20%, rgba(28, 79, 70, 0.10), transparent 30%),
+    linear-gradient(180deg, #fffaf0 0%, #f8f1df 100%);
+}
+
+.home-bg::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  width: min(360px, 58vw);
+  height: min(300px, 48vw);
+  background: rgba(200, 155, 60, 0.2);
+  opacity: 0.35;
+  clip-path: polygon(50% 0, 62% 32%, 100% 22%, 74% 53%, 92% 86%, 58% 72%, 50% 100%, 42% 72%, 8% 86%, 26% 53%, 0 22%, 38% 32%);
+}
+
+.home-bg::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: min(600px, 90vw);
+  height: 180px;
+  transform: translateX(-50%);
+  background: rgba(36, 70, 63, 0.15);
+  opacity: 0.6;
+  clip-path: polygon(0 86%, 9% 74%, 16% 86%, 26% 58%, 34% 86%, 44% 66%, 51% 86%, 61% 44%, 72% 86%, 82% 69%, 91% 86%, 100% 77%, 100% 100%, 0 100%);
+}
+
 .app-panel {
   background: var(--panel-bg);
   border: 1px solid var(--panel-border);
